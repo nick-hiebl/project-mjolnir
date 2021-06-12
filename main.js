@@ -53,54 +53,12 @@ function samePos(a, b) {
     return a.i === b.i && a.j === b.j;
 }
 
-const KEYS = {
-    LEFT: false,
-    RIGHT: false,
-    UP: false,
-    DOWN: false,
-};
-
-function keyDown(event) {
-    // Only set override to true if putting key down for the first time
-    let override = false;
-
-    switch (event.key) {
-        case 'w': case 'ArrowUp':
-            override = !KEYS.UP;
-            KEYS.UP = true;
-            break;
-        case 'a': case 'ArrowLeft':
-            override = !KEYS.LEFT;
-            KEYS.LEFT = true;
-            break;
-        case 's': case 'ArrowDown':
-            override = !KEYS.DOWN;
-            KEYS.DOWN = true;
-            break;
-        case 'd': case 'ArrowRight':
-            override = !KEYS.RIGHT;
-            KEYS.RIGHT = true;
-            break;
-    }
-
-    doMovement(override);
+function isWalkable(block) {
+    return block != BLOCK.SOLID;
 }
 
-function keyUp(event) {
-    switch (event.key) {
-        case 'w': case 'ArrowUp':
-            KEYS.UP = false;
-            break;
-        case 'a': case 'ArrowLeft':
-            KEYS.LEFT = false;
-            break;
-        case 's': case 'ArrowDown':
-            KEYS.DOWN = false;
-            break;
-        case 'd': case 'ArrowRight':
-            KEYS.RIGHT = false;
-            break;
-    }
+function isBlastable(block) {
+    return block != BLOCK.SOLID;
 }
 
 function doMovement(override=false) {
@@ -124,7 +82,7 @@ function doMovement(override=false) {
     }
 
     // check empty
-    if (level.grid[player.i + di][player.j + dj] != BLOCK.EMPTY) {
+    if (!isWalkable(level.grid[player.i + di][player.j + dj])) {
         return;
     }
 
@@ -181,7 +139,7 @@ function doMovement(override=false) {
                 const blastI = hammer.i - di * m;
                 const blastJ = hammer.j - dj * m;
 
-                if (level.grid[blastI][blastJ] !== BLOCK.SOLID) {
+                if (isBlastable(level.grid[blastI][blastJ])) {
                     m++;
                 } else {
                     break;
@@ -247,218 +205,6 @@ function imageAt(image, x, y) {
 
 const SHEET_SCALE = 32;
 
-function lerp(a, b, factor) {
-    return a * factor + b * (1 - factor);
-}
-
-function tanh(x) {
-    const maxi = Math.exp(x);
-    const mini = 1 / maxi;
-    return (maxi - mini) / (maxi + mini);
-}
-
-function slow(x) {
-    const factor = 1/2 * tanh(4*x - 1.5)+1/2;
-    return factor;
-}
-
-function hori(x) {
-    return 1/2 * tanh(8*x - 2.25) + 1/2;
-}
-
-function drawHammer(x, y, facing) {
-    let prev = {
-        i: hammer.i,
-        j: hammer.j,
-    };
-
-    canvas.color('brown');
-    canvas.lineWidth(GRID_SCALE*1/8);
-    for (let link of hammer.chain) {
-        canvas.line(
-            (prev.i + 0.5) * GRID_SCALE,
-            (prev.j + 0.5) * GRID_SCALE,
-            (link.i + 0.5) * GRID_SCALE,
-            (link.j + 0.5) * GRID_SCALE,
-        );
-        prev.i = link.i;
-        prev.j = link.j;
-        canvas.fillArc(
-            (prev.i + 0.5) * GRID_SCALE,
-            (prev.j + 0.5) * GRID_SCALE,
-            GRID_SCALE / 16,
-            GRID_SCALE / 16,
-        );
-    }
-
-    const currI = player.fromI === player.i
-        ? player.fromI
-        : lerp(player.fromI, player.i, hori(player.animTimeLeft / WALK_DURATION));
-
-    const currJ = player.fromJ === player.j
-        ? player.fromJ
-        : player.fromJ > player.j
-            ? lerp(player.fromJ, player.j, slow(player.animTimeLeft / WALK_DURATION))
-            : lerp(player.fromJ, player.j, player.animTimeLeft / WALK_DURATION);
-
-    if (currI != prev.i && currJ != prev.j) {
-        canvas.line(
-            (prev.i + 0.5) * GRID_SCALE,
-            (prev.j + 0.5) * GRID_SCALE,
-            (player.i + 0.5) * GRID_SCALE,
-            (player.j + 0.5) * GRID_SCALE,
-        );
-        prev.i = player.i;
-        prev.j = player.j;
-        canvas.fillArc(
-            (prev.i + 0.5) * GRID_SCALE,
-            (prev.j + 0.5) * GRID_SCALE,
-            GRID_SCALE / 16,
-            GRID_SCALE / 16,
-        );
-    }
-
-    canvas.line(
-        (prev.i + 0.5) * GRID_SCALE,
-        (prev.j + 0.5) * GRID_SCALE,
-        (currI + 0.5) * GRID_SCALE,
-        (currJ + 0.5) * GRID_SCALE,
-    );
-
-    canvas.color('grey');
-    canvas.save();
-    canvas.translate((x + 0.5) * GRID_SCALE, (y + 0.5) * GRID_SCALE);
-    canvas.rotate(facing * Math.PI / 2);
-    if (hammer.blasting) {
-        const frameNo = 4 + Math.floor((Date.now() % 256) / 64);
-
-        canvas.drawFromSheet(
-            image=IMAGES.hammerSheet,
-            sx=SHEET_SCALE * frameNo,
-            sy=0,
-            sw=SHEET_SCALE,
-            sh=SHEET_SCALE * 1.5,
-            dx=-GRID_SCALE / 2,
-            dy=-GRID_SCALE / 2,
-            dw=GRID_SCALE,
-            dh=GRID_SCALE * 1.5,
-        );
-
-        for (let iii = 1; iii < hammer.blastLength; iii++) {
-            canvas.drawFromSheet(
-                image=IMAGES.hammerSheet,
-                sx=SHEET_SCALE * frameNo,
-                sy=SHEET_SCALE * 1.5,
-                sw=SHEET_SCALE,
-                sh=SHEET_SCALE,
-                dx=-GRID_SCALE / 2,
-                dy=iii * GRID_SCALE,
-                dw=GRID_SCALE,
-                dh=GRID_SCALE,
-            );
-        }
-
-        canvas.drawFromSheet(
-            image=IMAGES.hammerSheet,
-            sx=SHEET_SCALE * frameNo,
-            sy=SHEET_SCALE * 2.5,
-            sw=SHEET_SCALE,
-            sh=SHEET_SCALE / 2,
-            dx=-GRID_SCALE / 2,
-            dy=hammer.blastLength * GRID_SCALE,
-            dw=GRID_SCALE,
-            dh=GRID_SCALE / 2,
-        );
-    } else {
-        canvas.drawImage(
-            IMAGES.hammer,
-            -GRID_SCALE / 2,
-            - GRID_SCALE / 2,
-            GRID_SCALE,
-            GRID_SCALE,
-        );
-    }
-    
-    canvas.restore();
-}
-
-function drawAlien(x, y, elapsedTime) {
-    if (player.animTimeLeft > 0) {
-        player.animTimeLeft -= elapsedTime;
-        const frameNo = Math.floor((WALK_DURATION - player.animTimeLeft) / WALK_DURATION * WALK_FRAMES);
-
-        if (player.j < player.fromJ) {
-            canvas.drawFromSheet(
-                image=IMAGES.alienUp,
-                sx=SHEET_SCALE * frameNo,
-                sy=0,
-                sw=SHEET_SCALE,
-                sh=SHEET_SCALE * 2,
-                dx=x * GRID_SCALE,
-                dy=y * GRID_SCALE,
-                dw=GRID_SCALE,
-                dh=GRID_SCALE * 2,
-            );
-        } else if (player.j > player.fromJ) {
-            canvas.drawFromSheet(
-                image=IMAGES.alienDown,
-                sx=SHEET_SCALE * frameNo,
-                sy=0,
-                sw=SHEET_SCALE,
-                sh=SHEET_SCALE * 2,
-                dx=x * GRID_SCALE,
-                dy=(y - 1) * GRID_SCALE,
-                dw=GRID_SCALE,
-                dh=GRID_SCALE * 2,
-            );
-        } else if (player.i > player.fromI) {
-            canvas.drawFromSheet(
-                image=IMAGES.alienRight,
-                sx=SHEET_SCALE * 2 * frameNo,
-                sy=0,
-                sw=SHEET_SCALE * 2,
-                sh=SHEET_SCALE,
-                dx=(x - 1) * GRID_SCALE,
-                dy=y * GRID_SCALE,
-                dw=GRID_SCALE * 2,
-                dh=GRID_SCALE,
-            );
-        }  else if (player.i < player.fromI) {
-            canvas.drawFromSheet(
-                image=IMAGES.alienLeft,
-                sx=SHEET_SCALE * 2 * frameNo,
-                sy=0,
-                sw=SHEET_SCALE * 2,
-                sh=SHEET_SCALE,
-                dx=x * GRID_SCALE,
-                dy=y * GRID_SCALE,
-                dw=GRID_SCALE * 2,
-                dh=GRID_SCALE,
-            );
-        }
-    } else {
-        const frames = 4;
-        const rate = 200;
-        const frameNo = Math.floor(Date.now() / rate) % frames;
-
-        player.animTimeLeft = 0;
-        player.fromI = player.i;
-        player.fromJ = player.j;
-
-        canvas.drawFromSheet(
-            image=IMAGES.alienIdle,
-            sx=SHEET_SCALE * frameNo,
-            sy=0,
-            sw=SHEET_SCALE,
-            sh=SHEET_SCALE,
-            dx=x * GRID_SCALE,
-            dy=y * GRID_SCALE,
-            dw=GRID_SCALE,
-            dh=GRID_SCALE,
-        );
-    }
-}
-
 function update(elapsedTime) {
     // do stuff
     doMovement();
@@ -490,10 +236,10 @@ function draw(elapsedTime) {
     }
 
     // draw hammer
-    drawHammer(hammer.i, hammer.j, hammer.facing);
+    drawHammer(canvas, hammer);
 
     // draw player
-    drawAlien(player.i, player.j, elapsedTime);
+    drawAlien(canvas, player.i, player.j, elapsedTime);
 }
 
 addSetup(setup);
