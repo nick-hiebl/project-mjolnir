@@ -5,6 +5,7 @@ const BLOCK = {
     EMPTY: 0,
     SOLID: 1,
     DESTRUCTABOX: 2,
+    COLLECTABLE: 3,
 };
 
 const player = {
@@ -54,13 +55,16 @@ function samePos(a, b) {
 }
 
 function isWalkable(block) {
-    return block == BLOCK.EMPTY;
+    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE;
 }
 
 function isBlastable(block) {
     return block != BLOCK.SOLID;
 }
 
+function doCollect(i,j) {
+    level.grid[i][j] = BLOCK.EMPTY;
+}
 function doMovement(override=false) {
     if (!override && player.animTimeLeft > 0) {
         return;
@@ -82,8 +86,11 @@ function doMovement(override=false) {
     }
 
     // check empty
-    if (!isWalkable(level.grid[player.i + di][player.j + dj])) {
+    const targetBlock = level.grid[player.i + di][player.j + dj]
+    if (!isWalkable(targetBlock)) {
         return;
+    } else if (targetBlock == BLOCK.COLLECTABLE) {
+        doCollect(player.i + di, player.j + dj);
     }
 
     const prevChain = hammer.chain[hammer.chain.length - 1] || hammer;
@@ -178,6 +185,7 @@ function rectAt(x, y) {
     );
 }
 
+
 function imageAt(image, x, y) {
     canvas.drawImage(
         image,
@@ -213,6 +221,9 @@ function draw(elapsedTime) {
             if (level.grid[i][j] == BLOCK.DESTRUCTABOX) {
                 canvas.color('purple');
                 rectAt(i, j);
+            } else if (level.grid[i][j] == BLOCK.COLLECTABLE) {
+                canvas.color('orange');
+                rectAt(i,j);
             }
         }
     }
