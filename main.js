@@ -44,6 +44,7 @@ const IMAGE_FILE_NAMES = {
     alienLeft: 'img/alien-left.png',
     alienRight: 'img/alien-right.png',
     spaceBackground: 'img/Space_Background_3.png',
+    spriteSheet: 'img/spritesheet.png',
 };
 
 const DIRECTIONS = [
@@ -225,6 +226,22 @@ function imageAt(image, x, y) {
     );
 }
 
+function spriteAt(spriteIndex, i, j) {
+    const spriteI = spriteIndex % 10;
+    const spriteJ = Math.floor(spriteIndex / 10);
+    canvas.drawFromSheet(
+        IMAGES.spriteSheet,
+        sx=SHEET_SCALE * spriteI,
+        sy=SHEET_SCALE * spriteJ,
+        sw=SHEET_SCALE,
+        sh=SHEET_SCALE,
+        dx=GRID_SCALE * i,
+        dy=GRID_SCALE * j,
+        dw=GRID_SCALE,
+        dh=GRID_SCALE,
+    );
+}
+
 const SHEET_SCALE = 32;
 
 function update(elapsedTime) {
@@ -248,11 +265,9 @@ function draw(elapsedTime) {
     for (let i = 0; i < level.grid.length; i++) {
         for (let j = 0; j < level.grid[i].length; j++) {
             if (level.grid[i][j] == BLOCK.DESTRUCTABOX) {
-                canvas.color('purple');
-                rectAt(i, j);
+                spriteAt(0, i, j);
             } else if (level.grid[i][j] == BLOCK.COLLECTABLE) {
-                canvas.color('orange');
-                rectAt(i,j);
+                spriteAt(1, i, j);
             } else if (level.grid[i][j] == BLOCK.DOOR_CLOSED) {
                 canvas.color('red');
                 rectAt(i,j);
