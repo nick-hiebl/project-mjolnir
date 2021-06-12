@@ -230,14 +230,26 @@ function draw(elapsedTime) {
 
     canvas.drawImage(IMAGES.spaceBackground, 0, 0);
 
-    canvas.drawImage(level.background, 0, 0, 640, 512);
+    const bg = !!level.background;
+    if (bg) {
+        canvas.drawImage(level.background, 0, 0, 640, 512);
+    }
 
     // draw level
     for (let i = 0; i < level.grid.length; i++) {
         for (let j = 0; j < level.grid[i].length; j++) {
-            if (level.grid[i][j] == BLOCK.DESTRUCTABOX) {
+            const blockType = level.grid[i][j];
+            if (!bg) {
+                if (blockType == BLOCK.SOLID) {
+                    spriteAt(3, i, j);
+                } else {
+                    spriteAt(2, i, j);
+                }
+            }
+
+            if (blockType == BLOCK.DESTRUCTABOX) {
                 spriteAt(0, i, j);
-            } else if (level.grid[i][j] == BLOCK.COLLECTABLE) {
+            } else if (blockType == BLOCK.COLLECTABLE) {
                 spriteAt(1, i, j);
             }
         }
