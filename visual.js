@@ -74,14 +74,20 @@ function Canvas(id) {
         this.ctx.lineWidth = width;
     }
 
-    this.loadImage = function(fileName) {
-        const img = new Image(32, 32);
+    this.loadImage = function(fileName, width=32, height=32) {
+        const img = new Image();
         img.src = fileName;
         return img;
     }
 
     this.drawImage = function(image, dx, dy, dw, dh) {
-        this.ctx.drawImage(image, dx, dy, dw, dh);
+        this.ctx.drawImage(
+            image,
+            dx,
+            dy,
+            dw || image.width,
+            dh || image.height,
+        );
     }
 
     this.drawFromSheet = function(image, sx, sy, sw, sh, dx, dy, dw, dh) {

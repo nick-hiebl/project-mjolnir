@@ -4,9 +4,8 @@ var level;
 const BLOCK = {
     EMPTY: 0,
     SOLID: 1,
-}
-
-const N = 12;
+    DESTRUCTABOX: 2,
+};
 
 const player = {
     i: 0,
@@ -40,6 +39,7 @@ const IMAGE_FILE_NAMES = {
     alienDown: 'img/alien-down.png',
     alienLeft: 'img/alien-left.png',
     alienRight: 'img/alien-right.png',
+    spaceBackground: 'img/Space_Background_3.png',
 };
 
 const DIRECTIONS = [
@@ -54,7 +54,7 @@ function samePos(a, b) {
 }
 
 function isWalkable(block) {
-    return block != BLOCK.SOLID;
+    return block == BLOCK.EMPTY;
 }
 
 function isBlastable(block) {
@@ -140,6 +140,7 @@ function doMovement(override=false) {
                 const blastJ = hammer.j - dj * m;
 
                 if (isBlastable(level.grid[blastI][blastJ])) {
+                    level.grid[blastI][blastJ] = BLOCK.EMPTY;
                     m++;
                 } else {
                     break;
@@ -164,23 +165,7 @@ function setup() {
         IMAGES[key] = canvas.loadImage(IMAGE_FILE_NAMES[key]);
     }
 
-    level = { grid: [] };
-
-    for (let i = 0; i < N; i++) {
-        level.grid.push([]);
-        for (let j = 0; j < N; j++) {
-            const isEdge = i == 0 || i == N-1 || j == 0 || j == N-1;
-            level.grid[i].push(isEdge ? BLOCK.SOLID : BLOCK.EMPTY);
-        }
-    }
-
-    player.i = Math.floor(N/2);
-    player.j = Math.floor(N/2);
-    player.fromI = player.i;
-    player.fromJ = player.j;
-
-    hammer.i = player.i;
-    hammer.j = player.j;
+    level = loadLevel(player, hammer, 0);
 
     addUpdate(update);
 }
@@ -214,25 +199,22 @@ function update(elapsedTime) {
 }
 
 function draw(elapsedTime) {
-    // draw level
-    for (let i = 0; i < N; i++) {
-        for (let j = 0; j < N; j++) {
-            switch (level.grid[i][j]) {
-                case BLOCK.SOLID:
-                    canvas.color('black');
-                    break;
-                case BLOCK.EMPTY:
-                    canvas.color('white');
-                    break;
-            }
-            rectAt(i, j);
-        }
-    }
+    // blank screen
+    canvas.color('white');
+    canvas.fillRect(0, 0, canvas.width, canvas.height);
 
-    for (let i = 0; i < N; i++) {
-        canvas.color('hsla(0, 0%, 0%, 0.1)');
-        canvas.line(i * GRID_SCALE, 0, i * GRID_SCALE, N * GRID_SCALE);
-        canvas.line(0, i * GRID_SCALE, N * GRID_SCALE, i * GRID_SCALE);
+    canvas.drawImage(IMAGES.spaceBackground, 0, 0);
+
+    canvas.drawImage(level.background, 0, 0, 640, 512);
+
+    // draw level
+    for (let i = 0; i < level.grid.length; i++) {
+        for (let j = 0; j < level.grid[i].length; j++) {
+            if (level.grid[i][j] == BLOCK.DESTRUCTABOX) {
+                canvas.color('purple');
+                rectAt(i, j);
+            }
+        }
     }
 
     // draw hammer
