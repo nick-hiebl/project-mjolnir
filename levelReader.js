@@ -36,12 +36,14 @@ const buttons = [
         j: 11,
     },
 ]
+
 function resetPlayer(player, i, j) {
     player.i = i;
     player.j = j;
     player.fromI = i;
     player.fromJ = j;
     player.animTimeLeft = 0;
+    player.winning = false;
 }
 
 function resetHammer(hammer, i, j, facing) {
@@ -54,20 +56,16 @@ function resetHammer(hammer, i, j, facing) {
     hammer.blastLength = 0;
 }
 
-function readLevelMap(string) {
+function readLevelMap(levelData) {
     const level = {
         grid: [],
-        background: canvas.loadImage(FILE_NAME),
+        background: loadImage(levelData.file_name),
         collectables: 0,
-        doors: [],
-        buttons: [],
+        doors: (levelData.doors || []).map(obj => Object.assign({}, obj)),
+        buttons: (levelData.buttons || []).map(obj => Object.assign({}, obj)),
     };
 
-    // TODO: Remove this when we move to JSON
-    level.doors = doors
-    level.buttons = buttons
-    console.log(level.doors, level.buttons);
-    for (const row of string.split('\n')) {
+    for (const row of levelData.level_string.split('\n')) {
         const thisRow = [];
         level.grid.push(thisRow);
         for (const char of row) {
@@ -81,9 +79,20 @@ function readLevelMap(string) {
     return level;
 }
 
+const LEVELS = [
+    DUMMY_LEVEL,
+    LEVEL_0,
+];
+
 function loadLevel(player, hammer, _number) {
-    resetPlayer(player, 2, 4);
-    resetHammer(hammer, 1, 4, 1);
+    // resetPlayer(player, 2, 4);
+    // resetHammer(hammer, 1, 4, 1);
+
+    // return readLevelMap(LEVEL_STRING);
+
+    const levelData = LEVELS[(_number % LEVELS.length) || 0];
+    resetPlayer(player, levelData.player.i, levelData.player.j);
+    resetHammer(hammer, levelData.hammer.i, levelData.hammer.j, levelData.hammer.facing);
     
-    return readLevelMap(LEVEL_STRING);
+    return readLevelMap(levelData);
 }

@@ -74,12 +74,6 @@ function Canvas(id) {
         this.ctx.lineWidth = width;
     }
 
-    this.loadImage = function(fileName, width=32, height=32) {
-        const img = new Image();
-        img.src = fileName;
-        return img;
-    }
-
     this.drawImage = function(image, dx, dy, dw, dh) {
         this.ctx.drawImage(
             image,
@@ -108,6 +102,14 @@ function Canvas(id) {
 
     this.rotate = function(a) {
         this.ctx.rotate(a);
+    }
+
+    this.opacity = function(opacity) {
+        this.ctx.filter = `opacity(${opacity}%)`;
+    }
+
+    this.clearFilter = function() {
+        this.ctx.filter = null;
     }
 }
 
@@ -150,3 +152,9 @@ window.onload = function() {
 
     beginLoop();
 };
+
+function loadImage(fileName, width=32, height=32) {
+    const img = new Image();
+    img.src = fileName;
+    return img;
+}

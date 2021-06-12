@@ -28,7 +28,7 @@ function keyDown(event) {
             break;
     }
 
-    doMovement(override);
+    return override;
 }
 
 function keyUp(event) {

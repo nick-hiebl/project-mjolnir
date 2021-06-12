@@ -17,7 +17,10 @@ function hori(x) {
     return 1/2 * tanh(8*x - 2.25) + 1/2;
 }
 
-function drawAlien(canvas, x, y, elapsedTime) {
+function drawAlien(canvas, player, elapsedTime) {
+    const x = player.i;
+    const y = player.j;
+
     if (player.animTimeLeft > 0) {
         player.animTimeLeft -= elapsedTime;
         const frameNo = Math.floor((WALK_DURATION - player.animTimeLeft) / WALK_DURATION * WALK_FRAMES);

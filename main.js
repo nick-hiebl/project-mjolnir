@@ -1,38 +1,5 @@
-var canvas;
-var level;
-
-const BLOCK = {
-    EMPTY: 0,
-    SOLID: 1,
-    DESTRUCTABOX: 2,
-    COLLECTABLE: 3,
-    DOOR_OPEN: 4,
-    DOOR_CLOSED: 5,
-    BUTTON: 6,
-};
-
-const player = {
-    i: 0,
-    j: 0,
-    fromI: 0,
-    fromJ: 0,
-    animTimeLeft: 0,
-};
-
 const WALK_DURATION = 300;
 const WALK_FRAMES = 8;
-
-const hammer = {
-    i: 0,
-    j: 0,
-    facing: 0,
-    chain: [],
-    links: 3,
-    blasting: false,
-    blastLength: 0,
-};
-
-const IMAGES = {};
 
 const IMAGE_FILE_NAMES = {
     alien: 'img/alien.png',
@@ -47,19 +14,59 @@ const IMAGE_FILE_NAMES = {
     spriteSheet: 'img/spritesheet.png',
 };
 
+const IMAGES = {};
+
 const DIRECTIONS = [
     { i:  0, j: -1 },
     { i:  1, j:  0 },
     { i:  0, j:  1 },
     { i: -1, j:  0 },
-]
+];
+
+const BLOCK = {
+    EMPTY: 0,
+    SOLID: 1,
+    DESTRUCTABOX: 2,
+    COLLECTABLE: 3,
+    DOOR_OPEN: 4,
+    DOOR_CLOSED: 5,
+    BUTTON: 6,
+    EXIT: 9,
+};
+
+const GRID_SCALE = 32;
+const SHEET_SCALE = 32;
+
+(() => {
+
+var canvas;
+var level;
+
+const player = {
+    i: 0,
+    j: 0,
+    fromI: 0,
+    fromJ: 0,
+    animTimeLeft: 0,
+    winning: false,
+};
+
+const hammer = {
+    i: 0,
+    j: 0,
+    facing: 0,
+    chain: [],
+    links: 3,
+    blasting: false,
+    blastLength: 0,
+};
 
 function samePos(a, b) {
     return a.i === b.i && a.j === b.j;
 }
 
 function isWalkable(block) {
-    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE || block == BLOCK.DOOR_OPEN || block == BLOCK.BUTTON;
+    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE || block == BLOCK.DOOR_OPEN || block == BLOCK.BUTTON || block == BLOCK.EXIT;
 }
 
 function isBlastable(block) {
@@ -89,9 +96,11 @@ function findDoor(i,j) {
 
 function doCollect(i,j) {
     level.grid[i][j] = BLOCK.EMPTY;
+    level.collectables--;
 }
+
 function doMovement(override=false) {
-    if (!override && player.animTimeLeft > 0) {
+    if ((!override && player.animTimeLeft > 0) || player.winning) {
         return;
     }
 
@@ -190,40 +199,30 @@ function doMovement(override=false) {
         hammer.i = oldest.i;
         hammer.j = oldest.j;
     }
+
+    if (targetBlock == BLOCK.EXIT && level.collectables <= 0) {
+        player.winning = true;
+    }
 }
 
+let currentLevel = 0;
+
 function setup() {
-    window.addEventListener('keydown', keyDown, false);
+    window.addEventListener('keydown', (event) => {
+        const override = keyDown(event);
+        doMovement(override);
+    }, false);
     window.addEventListener('keyup', keyUp, false);
 
     canvas = new Canvas('canvas');
 
     for (const key in IMAGE_FILE_NAMES) {
-        IMAGES[key] = canvas.loadImage(IMAGE_FILE_NAMES[key]);
+        IMAGES[key] = loadImage(IMAGE_FILE_NAMES[key]);
     }
 
     level = loadLevel(player, hammer, 0);
 
     addUpdate(update);
-}
-
-const GRID_SCALE = 32;
-
-function rectAt(x, y) {
-    canvas.fillRect(
-        x * GRID_SCALE, y * GRID_SCALE, GRID_SCALE, GRID_SCALE,
-    );
-}
-
-
-function imageAt(image, x, y) {
-    canvas.drawImage(
-        image,
-        x * GRID_SCALE,
-        y * GRID_SCALE,
-        GRID_SCALE,
-        GRID_SCALE,
-    );
 }
 
 function spriteAt(spriteIndex, i, j) {
@@ -242,23 +241,69 @@ function spriteAt(spriteIndex, i, j) {
     );
 }
 
-const SHEET_SCALE = 32;
+const LOADING_TIME = 2000;
+let isLoading = false;
+let nextLevelTime = 0;
+
+let previousState = null;
 
 function update(elapsedTime) {
     // do stuff
-    doMovement();
+    if (!isLoading) {
+        doMovement();
+    }
+
+    if (player.animTimeLeft <= 0 && player.winning && !isLoading) {
+        isLoading = true;
+        nextLevelTime = LOADING_TIME;
+        previousState = {
+            level: { ...level },
+            player: { ...player },
+            hammer: { ...hammer },
+        };
+
+        currentLevel++;
+
+        level = loadLevel(player, hammer, currentLevel);
+    }
 
     // draw
-    draw(elapsedTime);
+    drawBackground();
+
+    if (isLoading) {
+        nextLevelTime -= elapsedTime;
+        if (nextLevelTime <= 0) {
+            isLoading = false;
+            nextLevelTime = 0;
+            previousBg = null;
+        }
+        const offset = Math.round(lerp(0, -canvas.width, nextLevelTime / LOADING_TIME));
+
+        const transitionPoint = Math.round(lerp(100, -100, nextLevelTime / LOADING_TIME));
+
+        canvas.save();
+        canvas.translate(offset, 0);
+        draw(elapsedTime, previousState, Math.max(0, transitionPoint));
+        canvas.restore();
+
+        canvas.save();
+        canvas.translate(offset + canvas.width, 0);
+        draw(elapsedTime, { level, player, hammer }, Math.max(0, -transitionPoint));
+        canvas.restore();
+    } else {
+        draw(elapsedTime, { level, player, hammer });
+    }
 }
 
-function draw(elapsedTime) {
+function drawBackground() {
     // blank screen
     canvas.color('white');
     canvas.fillRect(0, 0, canvas.width, canvas.height);
 
     canvas.drawImage(IMAGES.spaceBackground, 0, 0);
+}
 
+function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
     const bg = !!level.background;
     if (bg) {
         canvas.drawImage(level.background, 0, 0, 640, 512);
@@ -286,15 +331,27 @@ function draw(elapsedTime) {
                 spriteAt(6, i, j);
             } else if (level.grid[i][j] == BLOCK.BUTTON) {
                 spriteAt(4, i, j);
-            } 
+            } else if (level.grid[i][j] == BLOCK.EXIT) {
+                spriteAt(7, i, j);
+            }
         }
     }
 
-    // draw hammer
-    drawHammer(canvas, hammer);
+    if (opacity !== 100) {
+        canvas.opacity(opacity);
+    }
 
-    // draw player
-    drawAlien(canvas, player.i, player.j, elapsedTime);
+    if (opacity > 0) {
+        // draw hammer
+        drawHammer(canvas, hammer, player);
+
+        // draw player
+        drawAlien(canvas, player, elapsedTime);
+    }
+
+    canvas.clearFilter();
 }
 
 addSetup(setup);
+
+})();

@@ -1,4 +1,4 @@
-function drawHammer(canvas, hammer) {
+function drawHammer(canvas, hammer, player) {
     const x = hammer.i;
     const y = hammer.j;
     const facing = hammer.facing;
