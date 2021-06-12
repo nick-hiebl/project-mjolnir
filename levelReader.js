@@ -13,7 +13,7 @@ const LEVEL_STRING = `1111111111111111
 1111110110121111
 1111000110121111
 1111010110121111
-1111000000121111
+1111003000121111
 1111111111121111
 1111111111121111
 1111111111101111
@@ -43,16 +43,20 @@ function readLevelMap(string) {
     const level = {
         grid: [],
         background: canvas.loadImage(FILE_NAME),
+        collectables: 0
     };
 
     for (const row of string.split('\n')) {
         const thisRow = [];
         level.grid.push(thisRow);
         for (const char of row) {
-            thisRow.push(parseInt(char, 10));
+            const blockType = parseInt(char, 10);
+            thisRow.push(blockType);
+            if (blockType == BLOCK.COLLECTABLE) {
+                level.collectables++;
+            }
         }
     }
-
     return level;
 }
 
