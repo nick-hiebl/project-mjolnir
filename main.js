@@ -6,6 +6,9 @@ const BLOCK = {
     SOLID: 1,
     DESTRUCTABOX: 2,
     COLLECTABLE: 3,
+    DOOR_OPEN: 4,
+    DOOR_CLOSED: 5,
+    BUTTON: 6,
 };
 
 const player = {
@@ -56,11 +59,32 @@ function samePos(a, b) {
 }
 
 function isWalkable(block) {
-    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE;
+    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE || block == BLOCK.DOOR_OPEN || block == BLOCK.BUTTON;
 }
 
 function isBlastable(block) {
-    return block != BLOCK.SOLID;
+    return block != BLOCK.SOLID && block != BLOCK.DOOR_CLOSED;
+}
+
+function isDestructable(block) {
+    return block == BLOCK.DESTRUCTABOX || block == BLOCK.COLLECTABLE;
+}
+
+// The coordinates passed in here, are for the button. Finds the door associated with the button
+function findDoor(i,j) {
+    for (const button of level.buttons) {
+        if (button.i == i && button.j == j) {
+            const doorId = button.id;
+            console.log("doorID:" , doorId);
+            for( const door of level.doors) {
+                if (door.id == doorId) {
+                    console.log("DOOR:", door);
+                    return door;
+                }
+            }
+        }
+    }
+
 }
 
 function doCollect(i,j) {
@@ -92,6 +116,9 @@ function doMovement(override=false) {
         return;
     } else if (targetBlock == BLOCK.COLLECTABLE) {
         doCollect(player.i + di, player.j + dj);
+    } else if (targetBlock == BLOCK.BUTTON) {
+        const toOpen = findDoor(player.i+di, player.j+dj);
+        level.grid[toOpen.i][toOpen.j] = BLOCK.DOOR_OPEN;
     }
 
     const prevChain = hammer.chain[hammer.chain.length - 1] || hammer;
@@ -148,7 +175,9 @@ function doMovement(override=false) {
                 const blastJ = hammer.j - dj * m;
 
                 if (isBlastable(level.grid[blastI][blastJ])) {
-                    level.grid[blastI][blastJ] = BLOCK.EMPTY;
+                    if (isDestructable(level.grid[blastI][blastJ])) {
+                        level.grid[blastI][blastJ] = BLOCK.EMPTY;
+                    }
                     m++;
                 } else {
                     break;
@@ -251,7 +280,16 @@ function draw(elapsedTime) {
                 spriteAt(0, i, j);
             } else if (blockType == BLOCK.COLLECTABLE) {
                 spriteAt(1, i, j);
-            }
+            } else if (level.grid[i][j] == BLOCK.DOOR_CLOSED) {
+                canvas.color('red');
+                rectAt(i,j);
+            } else if (level.grid[i][j] == BLOCK.DOOR_OPEN) {
+                canvas.color('green');
+                rectAt(i,j);
+            } else if (level.grid[i][j] == BLOCK.BUTTON) {
+                canvas.color('blue');
+                rectAt(i,j);
+            } 
         }
     }
 
