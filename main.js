@@ -6,9 +6,8 @@ const BLOCK = {
     SOLID: 1,
     DESTRUCTABOX: 2,
     COLLECTABLE: 3,
-    DOOR_OPEN: 4,
-    DOOR_CLOSED: 5,
-    BUTTON: 6,
+    DOOR: 4,
+    BUTTON: 5,
 };
 
 const player = {
@@ -58,43 +57,115 @@ function samePos(a, b) {
     return a.i === b.i && a.j === b.j;
 }
 
-function isWalkable(block) {
-    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE || block == BLOCK.DOOR_OPEN || block == BLOCK.BUTTON;
+function isWalkable(i, j) {
+    const block = level.grid[i][j];
+    if (block == BLOCK.DOOR) {
+        const door = findDoor(i,j);
+        if (door.state == DOOR.CLOSED) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE || block == BLOCK.BUTTON;
 }
 
-function isBlastable(block) {
-    return block != BLOCK.SOLID && block != BLOCK.DOOR_CLOSED;
+function isBlastable(i,j) {
+    const block = level.grid[i][j];
+    if (block == BLOCK.DOOR) {
+        const door = findDoor(i,j);
+        console.log(door);
+        if (door.state == DOOR.CLOSED) {
+            return false;
+        } else {
+            console.log("True my dude");
+            return true;
+        }
+    }
+    return block != BLOCK.SOLID
 }
 
-function isDestructable(block) {
+function isDestructable(i,j) {
+    const block = level.grid[i][j];
     return block == BLOCK.DESTRUCTABOX || block == BLOCK.COLLECTABLE;
 }
 
 // The coordinates passed in here, are for the button. Finds the door associated with the button
 function findDoor(i,j) {
-    for (const button of level.buttons) {
-        if (button.i == i && button.j == j) {
-            const doorId = button.id;
-            console.log("doorID:" , doorId);
-            for( const door of level.doors) {
-                if (door.id == doorId) {
-                    console.log("DOOR:", door);
-                    return door;
-                }
-            }
+    for (const door of level.doors) {
+        if (door.i == i && door.j == j) {
+            return door;
         }
     }
+}
 
+function findDoorById(id) {
+    for (const door of level.doors) {
+        if (door.id == id) {
+            return door;
+        }
+    }
+}
+
+function findButton(i,j) {
+    for (const button of level.buttons) {
+        if (button.i == i && button.j == j) {
+            return button;
+        }
+    }
 }
 
 function doCollect(i,j) {
     level.grid[i][j] = BLOCK.EMPTY;
+}
+
+// function pressButton(i,j) {
+//     const button = findButton(i,j);
+//     button.state = BUTTON.PRESSED;
+// }
+
+function doButtonDoors() {
+    // Check if player or hammer is on the button
+    const activatedDoors = [];
+    let result = doButtonPressed(player.i, player.j)
+    if (result) {
+        activatedDoors.push(result);
+    }
+    result = doButtonPressed(hammer.i, hammer.j)
+    if (result) {
+        activatedDoors.push(result);
+    }
+    for ( const door of level.doors ) {
+        if ( door.state == DOOR.OPEN ) {
+            let isCorrect = false;
+            for (const activatedDoor of activatedDoors) {
+                if (activatedDoor.i == door.i && activatedDoor.j == door.j ) {
+                    isCorrect = true;
+                    break;
+                }
+            }
+            if (isCorrect == false) {
+                door.state = DOOR.CLOSED;
+            }
+        }
+    }
+}
+
+function doButtonPressed(i,j) {
+    const button = findButton(i,j);
+    if (button != undefined) {
+        const door = findDoorById(button.id);
+        door.state = DOOR.OPEN;
+        return { i: door.i, j: door.j }
+    }
+    return null;
 }
 function doMovement(override=false) {
     if (!override && player.animTimeLeft > 0) {
         return;
     }
 
+    // console.log(level.doors[0]);
     let di = 0;
     let dj = 0;
 
@@ -112,13 +183,10 @@ function doMovement(override=false) {
 
     // check empty
     const targetBlock = level.grid[player.i + di][player.j + dj]
-    if (!isWalkable(targetBlock)) {
+    if (!isWalkable(player.i + di, player.j + dj)) {
         return;
     } else if (targetBlock == BLOCK.COLLECTABLE) {
         doCollect(player.i + di, player.j + dj);
-    } else if (targetBlock == BLOCK.BUTTON) {
-        const toOpen = findDoor(player.i+di, player.j+dj);
-        level.grid[toOpen.i][toOpen.j] = BLOCK.DOOR_OPEN;
     }
 
     const prevChain = hammer.chain[hammer.chain.length - 1] || hammer;
@@ -163,7 +231,9 @@ function doMovement(override=false) {
                 break;
             }
         }
-
+        hammer.i = oldest.i;
+        hammer.j = oldest.j;
+        doButtonDoors();
         if (oldFacing != hammer.facing) {
             hammer.blasting = true;
 
@@ -171,11 +241,11 @@ function doMovement(override=false) {
 
             let m = 1;
             while (true) {
-                const blastI = hammer.i - di * m;
-                const blastJ = hammer.j - dj * m;
+                const blastI = oldest.i - (di ) * (m + 1);
+                const blastJ = oldest.j - (dj ) * (m + 1);
 
-                if (isBlastable(level.grid[blastI][blastJ])) {
-                    if (isDestructable(level.grid[blastI][blastJ])) {
+                if (isBlastable(blastI, blastJ)) {
+                    if (isDestructable(blastI, blastJ)) {
                         level.grid[blastI][blastJ] = BLOCK.EMPTY;
                     }
                     m++;
@@ -187,8 +257,9 @@ function doMovement(override=false) {
             hammer.blastLength = m;
         }
 
-        hammer.i = oldest.i;
-        hammer.j = oldest.j;
+
+    } else {
+        doButtonDoors();
     }
 }
 
@@ -280,11 +351,8 @@ function draw(elapsedTime) {
                 spriteAt(0, i, j);
             } else if (blockType == BLOCK.COLLECTABLE) {
                 spriteAt(1, i, j);
-            } else if (level.grid[i][j] == BLOCK.DOOR_CLOSED) {
+            } else if (level.grid[i][j] == BLOCK.DOOR) {
                 canvas.color('red');
-                rectAt(i,j);
-            } else if (level.grid[i][j] == BLOCK.DOOR_OPEN) {
-                canvas.color('green');
                 rectAt(i,j);
             } else if (level.grid[i][j] == BLOCK.BUTTON) {
                 canvas.color('blue');

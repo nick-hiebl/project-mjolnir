@@ -7,9 +7,9 @@ const LEVEL_STRING = `1111111111111111
 1111011111131111
 1111011111101111
 1111011111101111
-1111011111161111
+1111011111151111
 1111000110001111
-1111110110151111
+1111110110141111
 1111110110121111
 1111000110121111
 1111010110121111
@@ -21,11 +21,22 @@ const LEVEL_STRING = `1111111111111111
 1111111111101111
 1111111111111111`;
 
+const BUTTON = {
+    UNPRESSED : 0,
+    PRESSED: 1,
+}
+
+const DOOR = {
+    CLOSED: 0,
+    OPEN: 1,
+}
+
 const doors = [
     {
         id: 1,
         i: 9,
         j: 11,
+        state: DOOR.CLOSED,
     },
 ]
 
@@ -34,6 +45,7 @@ const buttons = [
         id: 1,
         i: 7,
         j: 11,
+        state: BUTTON.UNPRESSED,
     },
 ]
 function resetPlayer(player, i, j) {
