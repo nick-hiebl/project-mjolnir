@@ -281,14 +281,11 @@ function draw(elapsedTime) {
             } else if (blockType == BLOCK.COLLECTABLE) {
                 spriteAt(1, i, j);
             } else if (level.grid[i][j] == BLOCK.DOOR_CLOSED) {
-                canvas.color('red');
-                rectAt(i,j);
+                spriteAt(5, i, j);
             } else if (level.grid[i][j] == BLOCK.DOOR_OPEN) {
-                canvas.color('green');
-                rectAt(i,j);
+                spriteAt(6, i, j);
             } else if (level.grid[i][j] == BLOCK.BUTTON) {
-                canvas.color('blue');
-                rectAt(i,j);
+                spriteAt(4, i, j);
             } 
         }
     }
