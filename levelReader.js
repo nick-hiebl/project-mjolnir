@@ -50,7 +50,7 @@ const LEVELS = [
     // Intro Levels
     INTRO_0,
     INTRO_1,
-    
+
     LEVEL_1,
     LEVEL_2,
     LEVEL_3,
