@@ -1,5 +1,9 @@
 function Canvas(id) {
-    this.cnv = document.querySelector('canvas#' + id);
+    if (typeof id == 'string') {
+        this.cnv = document.querySelector('canvas#' + id);
+    } else {
+        this.cnv = id;
+    }
 
     this.ctx = this.cnv.getContext('2d');
     this.width = this.cnv.width;

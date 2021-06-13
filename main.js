@@ -32,6 +32,7 @@ const SHEET_SCALE = 32;
 (() => {
 
 var canvas;
+var trueCanvas;
 var level;
 
 const player = {
@@ -278,7 +279,11 @@ function setup() {
     }, false);
     window.addEventListener('keyup', keyUp, false);
 
-    canvas = new Canvas('canvas');
+    trueCanvas = new Canvas('canvas');
+    const hiddenCanvas = new OffscreenCanvas(trueCanvas.width, trueCanvas.height);
+    hiddenCanvas.width = trueCanvas.width;
+    hiddenCanvas.height = trueCanvas.height;
+    canvas = new Canvas(hiddenCanvas);
 
     for (const key in IMAGE_FILE_NAMES) {
         const fileName = IMAGE_FILE_NAMES[key];
@@ -371,6 +376,9 @@ function update(elapsedTime) {
 
         draw(elapsedTime, { level, player, hammer });
     }
+
+    trueCanvas.ctx.clearRect(0, 0, 640, 512);
+    trueCanvas.drawImage(canvas.cnv, 0, 0);
 }
 
 
