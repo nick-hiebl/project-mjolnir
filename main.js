@@ -112,31 +112,34 @@ function pickupCollectable(i,j) {
 function pressButtons() {
     // Check if player or hammer is on the button
     const activatedDoors = [];
-    let result = findMatchingDoor(player.i, player.j)
-    if (result) {
-        activatedDoors.push(result);
-    }
-    result = findMatchingDoor(hammer.i, hammer.j)
-    if (result) {
-        activatedDoors.push(result);
-    }
+    activatedDoors.push(...findMatchingDoors(player.i, player.j));
+    activatedDoors.push(...findMatchingDoors(hammer.i, hammer.j));
+
     for (const door of level.doors) {
-        if (door.state == DOOR.OPEN) {
+        if (samePos(hammer, door)) {
+            door.state = DOOR.OPEN;
+        } else if (door.state == DOOR.OPEN) {
+            // Check if this door is opened by a powered battery
+            const battery = findById(door.id, level.batteries)
+            if (battery && battery.powered) {
+                continue;
+            }
+
+            // Check if player is sitting on the door
+            if (samePos(player, door)) {
+                continue;
+            }
+
             let isCorrect = false;
+
             // Check if this is one of the doors being opened by button currently
             for (const activatedDoor of activatedDoors) {
-                if (activatedDoor.i == door.i && activatedDoor.j == door.j) {
+                if (samePos(door, activatedDoor)) {
                     isCorrect = true;
                     break;
                 }
             }
-            // Check if this door is opened by a powered battery
-            if (!isCorrect) {
-                const battery = findById(door.id, level.batteries)
-                if (battery && battery.powered) {
-                    isCorrect = true;
-                }
-            }
+
             if (!isCorrect) {
                 door.state = DOOR.CLOSED;
             }
@@ -144,14 +147,16 @@ function pressButtons() {
     }
 }
 
-function findMatchingDoor(i,j) {
+function findMatchingDoors(i,j) {
     const button = findItem(i, j, level.buttons);
-    if (button != undefined) {
-        const door = findById(button.id, level.doors);
-        door.state = DOOR.OPEN;
-        return { i: door.i, j: door.j }
+    if (button) {
+        const doors = level.doors.filter(door => door.id == button.id);
+        doors.forEach(door => {
+            door.state = DOOR.OPEN;
+        });
+        return doors;
     }
-    return null;
+    return [];
 }
 
 function movePlayer(override=false) {
