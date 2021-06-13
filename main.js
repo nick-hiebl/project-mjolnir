@@ -73,7 +73,7 @@ function isBlastable(i,j) {
         const door = findItem(i, j, level.doors);
         return door.state == DOOR.OPEN;
     }
-    return block != BLOCK.SOLID && block != BLOCK.WINDOW;
+    return block != BLOCK.SOLID;
 }
 
 function isDestructable(i, j) {
@@ -326,6 +326,38 @@ function spriteAt(spriteIndex, i, j) {
     );
 }
 
+function topGlass(spriteIndex, i, j) {
+    const spriteI = spriteIndex % 10;
+    const spriteJ = Math.floor(spriteIndex / 10);
+    canvas.drawFromSheet(
+        IMAGES.spriteSheet,
+        sx=SHEET_SCALE * spriteI,
+        sy=SHEET_SCALE * spriteJ,
+        sw=SHEET_SCALE,
+        sh=SHEET_SCALE * 20 / 32,
+        dx=GRID_SCALE * i,
+        dy=GRID_SCALE * j,
+        dw=GRID_SCALE,
+        dh=GRID_SCALE * 20 / 32,
+    );
+}
+
+function bottomGlass(spriteIndex, i, j) {
+    const spriteI = spriteIndex % 10;
+    const spriteJ = Math.floor(spriteIndex / 10);
+    canvas.drawFromSheet(
+        IMAGES.spriteSheet,
+        sx=SHEET_SCALE * spriteI,
+        sy=SHEET_SCALE * spriteJ + 20,
+        sw=SHEET_SCALE,
+        sh=SHEET_SCALE * 12 / 32,
+        dx=GRID_SCALE * i,
+        dy=GRID_SCALE * j + 20,
+        dw=GRID_SCALE,
+        dh=GRID_SCALE * 12 / 32,
+    );
+}
+
 const LOADING_TIME = 2000;
 let isLoading = false;
 let nextLevelTime = 0;
@@ -393,7 +425,7 @@ function update(elapsedTime) {
         draw(elapsedTime, { level, player, hammer });
     }
 
-    trueCanvas.ctx.clearRect(0, 0, 640, 512);
+    trueCanvas.wipe();
     trueCanvas.drawImage(canvas.cnv, 0, 0);
 }
 
@@ -428,38 +460,46 @@ function drawBackground(offset) {
     canvas.opacity(100);
 }
 
-function draw(elapsedTime, { level, player, hammer }, opacity = 100) { 
+/**
+ * background
+ * dev background
+ * floor group:
+ *      battery
+ *      button
+ *      collectable
+ *      door (open)
+ *      exit
+ * ground level:
+ *      rope
+ *      hammer
+ *      player
+ * tall bois:
+ *      crate
+ *      door (closed)
+ *      glass
+ */
+function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
+    // background & dev background
     const bg = !!level.background;
     if (bg) {
         canvas.drawImage(level.background, 0, 0);
-    }
-   
-    // draw level
-    for (let i = 0; i < level.grid.length; i++) {
-        for (let j = 0; j < level.grid[i].length; j++) {
-            const blockType = level.grid[i][j];
-            if (!bg) {
+    } else {
+        for (let j = 0; j < level.grid[0].length; j++) {
+            for (let i = 0; i < level.grid.length; i++) {
+                const blockType = level.grid[i][j];
                 if (blockType != BLOCK.SOLID) {
                     spriteAt(2, i, j);
                 }
             }
+        }
+    }
 
-            if (blockType == BLOCK.DESTRUCTABOX) {
-                if (j <= player.j) {
-                    spriteAt(10, i, j-1);
-                    spriteAt(20, i, j);
-                }
-            } else if (blockType == BLOCK.COLLECTABLE) {
-                spriteAt(12 + TOOL_KEY[i][j], i, j);
-            } else if (level.grid[i][j] == BLOCK.DOOR) {
-                const door = findItem(i, j, level.doors);
-                if (!door || door.state === DOOR.OPEN) {
-                    spriteAt(6, i, j);
-                } else if (j <= player.j) {
-                    spriteAt(11, i, j-1);
-                    spriteAt(21, i, j);
-                }
-            } else if (level.grid[i][j] == BLOCK.BATTERY) {
+    // floor group
+    for (let j = 0; j < level.grid[0].length; j++) {
+        for (let i = 0; i < level.grid.length; i++) {
+            const blockType = level.grid[i][j];
+
+            if (level.grid[i][j] == BLOCK.BATTERY) {
                 const battery = findItem(i, j, level.batteries);
                 if (!battery || battery.powered) {
                     spriteAt(9, i, j);
@@ -468,42 +508,64 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
                 }
             } else if (level.grid[i][j] == BLOCK.BUTTON) {
                 spriteAt(4, i, j);
+            } else if (blockType == BLOCK.COLLECTABLE) {
+                spriteAt(12 + TOOL_KEY[i][j], i, j);
+            } else if (level.grid[i][j] == BLOCK.DOOR) {
+                const door = findItem(i, j, level.doors);
+                const wasOpen = player.animTimeLeft > 0 && samePos(
+                    { i, j },
+                    { i: player.fromI, j: player.fromJ },
+                );
+                if (!door || door.state === DOOR.OPEN || wasOpen) {
+                    spriteAt(6, i, j);
+                }
             } else if (level.grid[i][j] == BLOCK.EXIT) {
                 if (level.collectables > 0) {
                     spriteAt(7, i, j);
                 } else {
                     spriteAt(17, i, j);
                 }
+            } else if (blockType == BLOCK.WINDOW) {
+                // spriteAt(31, i, j-1);
+                bottomGlass(41, i, j);
             }
         }
     }
 
-    if (opacity !== 100) {
-        canvas.opacity(opacity);
-    }
-
     if (opacity > 0) {
+        if (opacity !== 100) {
+            canvas.opacity(opacity);
+        }
         // draw hammer
         drawHammer(canvas, hammer, player);
 
         // draw player
         drawAlien(canvas, player, elapsedTime);
+
+        canvas.opacity(100);
     }
 
-    canvas.opacity(100);
-
-    for (let i = 0; i < level.grid.length; i++) {
-        for (let j = player.j + 1; j < level.grid[i].length; j++) {
+    // tall bois
+    for (let j = 0; j < level.grid[0].length; j++) {
+        for (let i = 0; i < level.grid.length; i++) {
             const blockType = level.grid[i][j];
+
             if (blockType == BLOCK.DESTRUCTABOX) {
                 spriteAt(10, i, j-1);
                 spriteAt(20, i, j);
             } else if (level.grid[i][j] == BLOCK.DOOR) {
                 const door = findItem(i, j, level.doors);
-                if (door && door.state === DOOR.CLOSED) {
+                const wasOpen = player.animTimeLeft > 0 && samePos(
+                    { i, j },
+                    { i: player.fromI, j: player.fromJ },
+                );
+                if (door && door.state === DOOR.CLOSED && !wasOpen) {
                     spriteAt(11, i, j-1);
                     spriteAt(21, i, j);
                 }
+            } else if (blockType == BLOCK.WINDOW) {
+                spriteAt(31, i, j-1);
+                topGlass(41, i, j);
             }
         }
     }
