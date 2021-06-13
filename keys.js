@@ -8,6 +8,7 @@ const KEYS = {
 function keyDown(event) {
     // Only set override to true if putting key down for the first time
     let override = false;
+    let reset = false;
 
     switch (event.key) {
         case 'w': case 'ArrowUp':
@@ -26,9 +27,15 @@ function keyDown(event) {
             override = !KEYS.RIGHT;
             KEYS.RIGHT = true;
             break;
+        case 'r':
+            reset = true;
+            break;
     }
 
-    return override;
+    return {
+        override,
+        reset,
+    };
 }
 
 function keyUp(event) {

@@ -26,7 +26,6 @@ function readLevelMap(levelData) {
         grid: [],
         background: levelData.file_name ? loadImage(levelData.file_name) : null,
         collectables: 0,
-        unpoweredBatteries: 0,
         doors: (levelData.doors || []).map(clone),
         buttons: (levelData.buttons || []).map(clone),
         batteries: (levelData.batteries || []).map(clone),
@@ -40,8 +39,6 @@ function readLevelMap(levelData) {
             thisRow.push(blockType);
             if (blockType == BLOCK.COLLECTABLE) {
                 level.collectables++;
-            } else if (blockType == BLOCK.BATTERY) {
-                level.unpoweredBatteries++;
             }
         }
     }
@@ -50,6 +47,7 @@ function readLevelMap(levelData) {
 }
 
 const LEVELS = [
+    MULTI_TEST,
     LEVEL_X,
     LEVEL_ROUNDnROUND,
     // LEVEL_BATTERY_TEST,
