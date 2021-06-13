@@ -1,18 +1,3 @@
-function tanh(x) {
-    const maxi = Math.exp(x);
-    const mini = 1 / maxi;
-    return (maxi - mini) / (maxi + mini);
-}
-
-function slow(x) {
-    const factor = 1/2 * tanh(4*x - 1.5)+1/2;
-    return factor;
-}
-
-function hori(x) {
-    return 1/2 * tanh(8*x - 2.25) + 1/2;
-}
-
 function drawAlien(canvas, player, elapsedTime) {
     const x = player.i;
     const y = player.j;
