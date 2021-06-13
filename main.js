@@ -268,6 +268,17 @@ function movePlayer(override=false) {
 
 let currentLevel = 0;
 
+function getHiddenCanvas(width, height) {
+    if (window.OffscreenCanvas) {
+        return new Canvas(new OffscreenCanvas(width, height));
+    } else {
+        const element = document.createElement('canvas');
+        element.width = width;
+        element.height = height;
+        return new Canvas(element);
+    }
+}
+
 function setup() {
     window.addEventListener('keydown', (event) => {
         const { override, reset } = keyDown(event);
@@ -280,10 +291,7 @@ function setup() {
     window.addEventListener('keyup', keyUp, false);
 
     trueCanvas = new Canvas('canvas');
-    const hiddenCanvas = new OffscreenCanvas(trueCanvas.width, trueCanvas.height);
-    hiddenCanvas.width = trueCanvas.width;
-    hiddenCanvas.height = trueCanvas.height;
-    canvas = new Canvas(hiddenCanvas);
+    canvas = getHiddenCanvas(trueCanvas.width, trueCanvas.height);
 
     for (const key in IMAGE_FILE_NAMES) {
         const fileName = IMAGE_FILE_NAMES[key];
