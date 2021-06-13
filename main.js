@@ -181,7 +181,11 @@ function movePlayer(override=false) {
     }
 
     // check boundary
-    if (i < 0 || j < 0 || i >= level.grid.length || j >= level.grid[i].length) {
+    if (
+        player.i + di < 0
+        || player.j + dj < 0
+        || player.i + di >= level.grid.length
+        || player.j + dj >= level.grid[player.i + di].length) {
         return;
     }
     // check empty
