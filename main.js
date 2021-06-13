@@ -10,7 +10,10 @@ const IMAGE_FILE_NAMES = {
     alienDown: 'img/alien-down.png',
     alienLeft: 'img/alien-left.png',
     alienRight: 'img/alien-right.png',
-    spaceBackground: 'img/Space_Background_3.png',
+    backgroundStars: 'img/background/stars.png',
+    backgroundNebula: 'img/background/nebula.png',
+    backgroundDust: 'img/background/dust.png',
+    backgroundPlanet: 'img/background/planet.png',
     spriteSheet: 'img/spritesheet.png',
 };
 
@@ -269,7 +272,12 @@ function setup() {
     canvas = new Canvas('canvas');
 
     for (const key in IMAGE_FILE_NAMES) {
-        IMAGES[key] = loadImage(IMAGE_FILE_NAMES[key]);
+        const fileName = IMAGE_FILE_NAMES[key];
+        if (fileName.includes('/background/')) {
+            IMAGES[key] = canvas.loadPattern(fileName);
+        } else {
+            IMAGES[key] = loadImage(fileName);
+        }
     }
 
     level = loadLevel(player, hammer, 0);
@@ -300,7 +308,11 @@ let nextLevelTime = 0;
 let previousState = null;
 let bgOffset = 0;
 
+let backgroundFrame = 0;
+
 function update(elapsedTime) {
+    backgroundFrame += elapsedTime * .1;
+
     // do stuff
     if (!isLoading) {
         movePlayer();
@@ -352,35 +364,43 @@ function update(elapsedTime) {
     }
 }
 
+
 function drawBackground(offset) {
     // blank screen
     canvas.color('white');
     canvas.fillRect(0, 0, canvas.width, canvas.height);
 
-    const bgWidth = IMAGES.spaceBackground.width;
+    canvas.drawTiledImage(IMAGES.backgroundStars, Math.round(offset/10), 0);
 
-    if (offset < -bgWidth) {
-        bgOffset += bgWidth;
-    }
-
-    canvas.drawImage(
-        IMAGES.spaceBackground,
-        Math.round(offset),
+    canvas.opacity(80);
+    canvas.drawTiledImage(
+        IMAGES.backgroundNebula,
+        backgroundFrame/80 + Math.round(offset/5),
         0,
     );
-    canvas.drawImage(
-        IMAGES.spaceBackground,
-        Math.round(offset) + IMAGES.spaceBackground.width,
-        0,
+    canvas.opacity(100);
+
+    canvas.drawTiledImage(
+        IMAGES.backgroundPlanet,
+        backgroundFrame/10 + Math.round(offset/3),
+        -backgroundFrame/100,
     );
+
+    canvas.opacity(90);
+    canvas.drawTiledImage(
+        IMAGES.backgroundDust,
+        500 + backgroundFrame/8 + Math.round(offset/1.5),
+        (backgroundFrame)/300 + 120 * Math.sin(backgroundFrame * 0.0002),
+    );
+    canvas.opacity(100);
 }
 
-function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
+function draw(elapsedTime, { level, player, hammer }, opacity = 100) { 
     const bg = !!level.background;
     if (bg) {
         canvas.drawImage(level.background, 0, 0);
     }
-
+   
     // draw level
     for (let i = 0; i < level.grid.length; i++) {
         for (let j = 0; j < level.grid[i].length; j++) {

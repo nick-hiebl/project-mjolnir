@@ -84,6 +84,26 @@ function Canvas(id) {
         );
     }
 
+    this.drawTiledImage = function(pattern, dx, dy) {
+        if (!pattern.image) {
+            return;
+        }
+
+        var startX = Math.floor(dx) % pattern.width;
+        var startY = Math.floor(dy) % pattern.height;
+
+        this.save();
+        this.ctx.translate(startX, startY);
+        this.ctx.fillStyle = pattern.image;
+        this.ctx.fillRect(
+            -startX,
+            -startY,
+            this.width,
+            this.height,
+        );
+        this.restore();
+    }
+
     this.drawFromSheet = function(image, sx, sy, sw, sh, dx, dy, dw, dh) {
         this.ctx.drawImage(image, sx, sy, sw, sh, dx, dy, dw, dh);
     }
@@ -109,7 +129,19 @@ function Canvas(id) {
     }
 
     this.clearFilter = function() {
-        this.ctx.filter = null;
+        this.ctx.filter = '';
+    }
+
+    this.loadPattern = function loadPattern(fileName) {
+        const image = loadImage(fileName);
+        const pattern = {};
+        image.onload = () => {
+            const ptn = this.ctx.createPattern(image, 'repeat');
+            pattern.image = ptn;
+            pattern.width = image.width;
+            pattern.height = image.height;
+        }
+        return pattern;
     }
 }
 
@@ -124,7 +156,9 @@ function beginLoop() {
         var thisFrame = Date.now();
         var elapsed = thisFrame - lastFrame;
 
+        // if (Math.random() < 0.99) {
         frameId = window.requestAnimationFrame(loop);
+        // }
 
         for (var u of UPDATES) {
             u(elapsed);
