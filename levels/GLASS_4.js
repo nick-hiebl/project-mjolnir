@@ -29,16 +29,16 @@ var LVL_GLASS_4 = {
         facing: 1,
     },
     doors: [
-        { id: DOOR_ID, i: 7, j: 4, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 8, j: 6, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 11, j: 7, state: DOOR.CLOSED }
+        { id: 2, i: 7, j: 4, state: DOOR.CLOSED },
+        { id: 1, i: 8, j: 6, state: DOOR.CLOSED },
+        { id: 3, i: 11, j: 7, state: DOOR.CLOSED }
     ],
     buttons: [
         
     ],
     batteries: [
-        { id: BATTERY_ID, i: 7, j: 3, powered: false },
-        { id: BATTERY_ID, i: 7, j: 6, powered: false },
-        { id: BATTERY_ID, i: 8, j: 5, powered: false }
+        { id: 3, i: 7, j: 3, powered: false },
+        { id: 1, i: 7, j: 6, powered: false },
+        { id: 2, i: 8, j: 5, powered: false }
     ],
 };

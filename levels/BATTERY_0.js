@@ -29,14 +29,14 @@ var LVL_BATTERY_0 = {
         facing: 3,
     },
     doors: [
-        { id: DOOR_ID, i: 13, j: 7, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 13, j: 8, state: DOOR.CLOSED }
+        { id: 1, i: 13, j: 7, state: DOOR.CLOSED },
+        { id: 2, i: 13, j: 8, state: DOOR.CLOSED }
     ],
     buttons: [
         
     ],
     batteries: [
-        { id: BATTERY_ID, i: 12, j: 7, powered: false },
-        { id: BATTERY_ID, i: 12, j: 8, powered: false }
+        { id: 1, i: 12, j: 7, powered: false },
+        { id: 2, i: 12, j: 8, powered: false }
     ],
 };

@@ -29,23 +29,23 @@ var LVL_BATTERY_3 = {
         facing: 1,
     },
     doors: [
-        { id: DOOR_ID, i: 4, j: 6, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 4, j: 7, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 4, j: 8, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 5, j: 6, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 5, j: 8, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 6, j: 6, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 6, j: 7, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 6, j: 8, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 11, j: 4, state: DOOR.CLOSED }
+        { id: 1, i: 4, j: 6, state: DOOR.CLOSED },
+        { id: 1, i: 4, j: 7, state: DOOR.CLOSED },
+        { id: 1, i: 4, j: 8, state: DOOR.CLOSED },
+        { id: 2, i: 5, j: 6, state: DOOR.CLOSED },
+        { id: 2, i: 5, j: 8, state: DOOR.CLOSED },
+        { id: 3, i: 6, j: 6, state: DOOR.CLOSED },
+        { id: 3, i: 6, j: 7, state: DOOR.CLOSED },
+        { id: 3, i: 6, j: 8, state: DOOR.CLOSED },
+        { id: 4, i: 11, j: 4, state: DOOR.CLOSED }
     ],
     buttons: [
         
     ],
     batteries: [
-        { id: BATTERY_ID, i: 4, j: 4, powered: false },
-        { id: BATTERY_ID, i: 5, j: 4, powered: false },
-        { id: BATTERY_ID, i: 5, j: 7, powered: false },
-        { id: BATTERY_ID, i: 6, j: 4, powered: false }
+        { id: 1, i: 4, j: 4, powered: false },
+        { id: 2, i: 5, j: 4, powered: false },
+        { id: 4, i: 5, j: 7, powered: false },
+        { id: 3, i: 6, j: 4, powered: false }
     ],
 };
