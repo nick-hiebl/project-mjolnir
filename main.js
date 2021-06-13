@@ -59,6 +59,9 @@ function samePos(a, b) {
 }
 
 function isWalkable(i, j) {
+    if (outOfBounds(i, j)) {
+        return false;
+    }
     const block = level.grid[i][j];
     if (block == BLOCK.DOOR) {
         const door = findItem(i, j, level.doors);
@@ -67,7 +70,10 @@ function isWalkable(i, j) {
     return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE || block == BLOCK.BUTTON || block == BLOCK.EXIT || block == BLOCK.BATTERY;
 }
 
-function isBlastable(i,j) {
+function isBlastable(i, j) {
+    if (outOfBounds(i, j)) {
+        return false;
+    }
     const block = level.grid[i][j];
     if (block == BLOCK.DOOR) {
         const door = findItem(i, j, level.doors);
@@ -77,6 +83,9 @@ function isBlastable(i,j) {
 }
 
 function isDestructable(i, j) {
+    if (outOfBounds(i, j)) {
+        return false;
+    }
     const block = level.grid[i][j];
     return block == BLOCK.DESTRUCTABOX || block == BLOCK.COLLECTABLE;
 }
@@ -160,6 +169,13 @@ function findMatchingDoors(i,j) {
     return [];
 }
 
+function outOfBounds(i, j) {
+    return i < 0
+        || j < 0
+        || i >= level.grid.length
+        || j >= level.grid[i].length;
+}
+
 function movePlayer(override=false) {
     if ((!override && player.animTimeLeft > 0) || player.winning) {
         return;
@@ -180,20 +196,19 @@ function movePlayer(override=false) {
         return;
     }
 
+    const nextI = player.i + di;
+    const nextJ = player.j + dj;
+
     // check boundary
-    if (
-        player.i + di < 0
-        || player.j + dj < 0
-        || player.i + di >= level.grid.length
-        || player.j + dj >= level.grid[player.i + di].length) {
+    if (outOfBounds(nextI, nextJ)) {
         return;
     }
     // check empty
-    const targetBlock = level.grid[player.i + di][player.j + dj]
-    if (!isWalkable(player.i + di, player.j + dj)) {
+    const targetBlock = level.grid[nextI][nextJ]
+    if (!isWalkable(nextI, nextJ)) {
         return;
     } else if (targetBlock == BLOCK.COLLECTABLE) {
-        pickupCollectable(player.i + di, player.j + dj);
+        pickupCollectable(nextI, nextJ);
     }
 
     const prevChain = hammer.chain[hammer.chain.length - 1] || hammer;
