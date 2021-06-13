@@ -47,8 +47,10 @@ function readLevelMap(levelData) {
 }
 
 const LEVELS = [
-    // MULTI_TEST,
-    LEVEL_0,
+    // Intro Levels
+    INTRO_0,
+    INTRO_1,
+    
     LEVEL_1,
     LEVEL_2,
     LEVEL_3,
@@ -56,11 +58,8 @@ const LEVELS = [
     LEVEL_5,
     LEVEL_6,
     LEVEL_X,
-    DOOR_PUZZLE_LEVEL,
+    MULTI_TEST,
     LEVEL_ROUNDnROUND,
-    // LEVEL_BATTERY_TEST,
-    DUMMY_LEVEL,
-    // LEVEL_0,
 ];
 
 function loadLevel(player, hammer, _number) {
