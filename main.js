@@ -259,6 +259,8 @@ function movePlayer(override=false) {
         pressButtons();
         if (oldFacing != hammer.facing) {
             hammer.blasting = true;
+            zoop.currentTime = 0;
+            zoop.play();
 
             const { i: di, j: dj } = DIRECTIONS[hammer.facing];
 
@@ -306,8 +308,16 @@ function getHiddenCanvas(width, height) {
     }
 }
 
+let audio;
+let playing = false;
+let zoop;
+
 function setup() {
     window.addEventListener('keydown', (event) => {
+        if (!playing) {
+            playing = true;
+            audio.play();
+        }
         const { override, reset, next, previous } = keyDown(event);
 
         if (next) {
@@ -321,6 +331,21 @@ function setup() {
         }
     }, false);
     window.addEventListener('keyup', keyUp, false);
+
+    audio = new Audio('./img/music.mp3');
+    audio.volume = 0.15;
+
+    if (typeof audio.loop == 'boolean') {
+        audio.loop = true;
+    } else {
+        audio.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+
+    zoop = new Audio('./img/blast1.mp3');
+    zoop.volume = 0.2;
 
     trueCanvas = new Canvas('canvas');
     canvas = getHiddenCanvas(trueCanvas.width, trueCanvas.height);
@@ -406,6 +431,9 @@ function nextLevel(levelIncrement=1) {
     };
 
     currentLevel += levelIncrement;
+    if (currentLevel < 0) {
+        currentLevel = 0;
+    }
 
     level = loadLevel(player, hammer, currentLevel);
 }
