@@ -73,7 +73,7 @@ function isBlastable(i,j) {
         const door = findItem(i, j, level.doors);
         return door.state == DOOR.OPEN;
     }
-    return block != BLOCK.SOLID;
+    return block != BLOCK.SOLID && block != BLOCK.WINDOW;
 }
 
 function isDestructable(i, j) {
