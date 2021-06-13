@@ -49,9 +49,9 @@ function readLevelMap(levelData) {
 const LEVELS = [
     // Intro Levels
     LVL_INTRO_0,
-    INTRO_1,
+    LVL_INTRO_1,
 
-    LVL_EMPTY,
+    HARDEST_0,
 
     LEVEL_1,
     LEVEL_2,
@@ -62,6 +62,9 @@ const LEVELS = [
     LEVEL_X,
     MULTI_TEST,
     LEVEL_ROUNDnROUND,
+
+    /// Development Levels
+    //LVL_EMPTY,
 ];
 
 function loadLevel(player, hammer, _number) {
