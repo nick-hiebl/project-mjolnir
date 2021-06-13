@@ -406,9 +406,7 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
         for (let j = 0; j < level.grid[i].length; j++) {
             const blockType = level.grid[i][j];
             if (!bg) {
-                if (blockType == BLOCK.SOLID) {
-                    spriteAt(3, i, j);
-                } else {
+                if (blockType != BLOCK.SOLID) {
                     spriteAt(2, i, j);
                 }
             }
