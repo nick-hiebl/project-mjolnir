@@ -60,7 +60,6 @@ const LEVELS = [
     LEVEL_ROUNDnROUND,
     // LEVEL_BATTERY_TEST,
     DUMMY_LEVEL,
-    // LEVEL_0,
 ];
 
 function loadLevel(player, hammer, _number) {

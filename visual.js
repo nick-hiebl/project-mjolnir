@@ -136,6 +136,10 @@ function Canvas(id) {
         this.ctx.filter = '';
     }
 
+    this.wipe = function() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
+    }
+
     this.loadPattern = function loadPattern(fileName) {
         const image = loadImage(fileName);
         const pattern = {};

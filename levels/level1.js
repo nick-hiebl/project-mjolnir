@@ -19,6 +19,7 @@ var LEVEL_1 = {
 1111111111111111
 1111111111111111
 1111111111111111`,
+    file_name: 'img/levels/level1_real.png',
     player: {
         i: 2,
         j: 2,

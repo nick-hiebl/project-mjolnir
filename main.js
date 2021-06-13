@@ -388,6 +388,7 @@ function update(elapsedTime) {
     } else {
         // draw
         drawBackground(bgOffset);
+        // canvas.wipe();
 
         draw(elapsedTime, { level, player, hammer });
     }
