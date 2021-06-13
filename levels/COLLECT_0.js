@@ -19,6 +19,7 @@ var LVL_COLLECT_0 = {
 1111111101111111
 1111111101111111
 1111111101111111`,
+file_name: 'img/levels/level10.png',
     player: {
         i: 3,
         j: 8,

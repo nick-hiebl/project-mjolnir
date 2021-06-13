@@ -19,6 +19,7 @@ var LVL_DESTRUCT_1 = {
 1111101111111111
 1111191111111111
 1111101111111111`,
+    file_name: 'img/levels/level5.png',
     player: {
         i: 2,
         j: 5,
