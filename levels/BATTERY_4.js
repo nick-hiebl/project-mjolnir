@@ -29,18 +29,18 @@ var LVL_BATTERY_4 = {
         facing: 1,
     },
     doors: [
-        { id: DOOR_ID, i: 8, j: 8, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 8, j: 9, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 9, j: 8, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 9, j: 9, state: DOOR.CLOSED }
+        { id: 1, i: 8, j: 8, state: DOOR.CLOSED },
+        { id: 3, i: 8, j: 9, state: DOOR.CLOSED },
+        { id: 2, i: 9, j: 8, state: DOOR.CLOSED },
+        { id: 4, i: 9, j: 9, state: DOOR.CLOSED }
     ],
     buttons: [
         
     ],
     batteries: [
-        { id: BATTERY_ID, i: 4, j: 8, powered: false },
-        { id: BATTERY_ID, i: 4, j: 9, powered: false },
-        { id: BATTERY_ID, i: 5, j: 8, powered: false },
-        { id: BATTERY_ID, i: 5, j: 9, powered: false }
+        { id: 1, i: 4, j: 8, powered: false },
+        { id: 3, i: 4, j: 9, powered: false },
+        { id: 2, i: 5, j: 8, powered: false },
+        { id: 4, i: 5, j: 9, powered: false }
     ],
 };
