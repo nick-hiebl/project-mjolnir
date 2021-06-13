@@ -50,9 +50,9 @@ function readLevelMap(levelData) {
 }
 
 const LEVELS = [
-    // LEVEL_ROUNDnROUND,
+    LEVEL_X,
+    LEVEL_ROUNDnROUND,
     // LEVEL_BATTERY_TEST,
-    // LEVEL_X,
     DUMMY_LEVEL,
     // LEVEL_0,
 ];
