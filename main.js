@@ -308,10 +308,12 @@ function getHiddenCanvas(width, height) {
 
 function setup() {
     window.addEventListener('keydown', (event) => {
-        const { override, reset, next } = keyDown(event);
+        const { override, reset, next, previous } = keyDown(event);
 
         if (next) {
             nextLevel();
+        } else if (previous) {
+            nextLevel(-1);
         } else if (reset) {
             level = loadLevel(player, hammer, currentLevel);
         } else {
@@ -394,7 +396,7 @@ let bgOffset = 0;
 
 let backgroundFrame = 0;
 
-function nextLevel() {
+function nextLevel(levelIncrement=1) {
     isLoading = true;
     nextLevelTime = LOADING_TIME;
     previousState = {
@@ -403,7 +405,7 @@ function nextLevel() {
         hammer: { ...hammer },
     };
 
-    currentLevel++;
+    currentLevel += levelIncrement;
 
     level = loadLevel(player, hammer, currentLevel);
 }
@@ -597,6 +599,20 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
                 topGlass(41, i, j);
             }
         }
+    }
+
+    if (level.failed) {
+        canvas.drawFromSheet(
+            IMAGES.spriteSheet,
+            sx=SHEET_SCALE * 8,
+            sy=SHEET_SCALE * 2,
+            sw=SHEET_SCALE * 2,
+            sh=SHEET_SCALE * 2,
+            dx=canvas.width - GRID_SCALE * 2,
+            dy=0,
+            dw=GRID_SCALE * 2,
+            dh=GRID_SCALE * 2,
+        );
     }
 }
 

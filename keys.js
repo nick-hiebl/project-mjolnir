@@ -10,6 +10,7 @@ function keyDown(event) {
     let override = false;
     let reset = false;
     let next = false;
+    let previous = false;
 
     switch (event.key) {
         case 'w': case 'ArrowUp':
@@ -34,12 +35,16 @@ function keyDown(event) {
         case 'n':
             next = true;
             break;
+        case 'p':
+            previous = true;
+            break;
     }
 
     return {
         override,
         reset,
         next,
+        previous,
     };
 }
 
