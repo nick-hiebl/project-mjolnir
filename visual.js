@@ -2,6 +2,8 @@ function Canvas(id) {
     this.cnv = document.querySelector('canvas#' + id);
 
     this.ctx = this.cnv.getContext('2d');
+    this.cnv.width = window.innerWidth;
+    this.cnv.height = window.innerHeight;
     this.width = this.cnv.width;
     this.height = this.cnv.height;
 
@@ -82,6 +84,21 @@ function Canvas(id) {
             dw || image.width,
             dh || image.height,
         );
+    }
+
+    this.drawTiledImage = function(image, dx, dy) {
+        var startX = Math.floor(-this.width + dx % image.width);
+        var startY = Math.floor(-this.height + dy % image.height);
+        var pattern = this.ctx.createPattern(image, 'repeat');
+        this.ctx.translate(startX, startY);
+        this.ctx.fillStyle = pattern;
+        this.ctx.fillRect(
+            0,
+            0,
+            this.width * 2,
+            this.height * 2
+        );
+        this.ctx.translate(-startX, -startY);
     }
 
     this.drawFromSheet = function(image, sx, sy, sw, sh, dx, dy, dw, dh) {

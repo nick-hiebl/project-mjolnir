@@ -10,11 +10,16 @@ const IMAGE_FILE_NAMES = {
     alienDown: 'img/alien-down.png',
     alienLeft: 'img/alien-left.png',
     alienRight: 'img/alien-right.png',
-    spaceBackground: 'img/Space_Background_3.png',
+    backgroundStars: 'img/background/stars.png',
+    backgroundNebula: 'img/background/nebula.png',
+    backgroundDust: 'img/background/dust.png',
+    backgroundPlanet: 'img/background/planet.png',
     spriteSheet: 'img/spritesheet.png',
 };
 
 const IMAGES = {};
+
+const SCALE = 1.5;
 
 const DIRECTIONS = [
     { i:  0, j: -1 },
@@ -269,6 +274,11 @@ function setup() {
 
     canvas = new Canvas('canvas');
 
+    canvas.resize(innerWidth/SCALE, innerHeight/SCALE);
+    window.onresize = () => {
+        canvas.resize(innerWidth/SCALE, innerHeight/SCALE);
+    }
+
     for (const key in IMAGE_FILE_NAMES) {
         IMAGES[key] = loadImage(IMAGE_FILE_NAMES[key]);
     }
@@ -348,31 +358,31 @@ function update(elapsedTime) {
     }
 }
 
+var backgroundFrame = 0;
+
 function drawBackground() {
+    backgroundFrame += 1;
     // blank screen
     canvas.color('white');
     canvas.fillRect(0, 0, canvas.width, canvas.height);
-
-    canvas.drawImage(IMAGES.spaceBackground, 0, 0);
+    canvas.drawTiledImage(IMAGES.backgroundStars, 0, 0);
+    canvas.drawTiledImage(IMAGES.backgroundNebula, Math.floor(backgroundFrame/30), 0);
+    canvas.drawTiledImage(IMAGES.backgroundDust, Math.floor(backgroundFrame/20), Math.floor(backgroundFrame/20));
+    canvas.drawTiledImage(IMAGES.backgroundPlanet, Math.floor(backgroundFrame/10), Math.floor(-backgroundFrame/10));
 }
 
-function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
-    const bg = !!level.background;
-    if (bg) {
-        canvas.drawImage(level.background, 0, 0);
-    }
+function draw(elapsedTime, { level, player, hammer }, opacity = 100) {    
+    const offsetX = Math.floor(canvas.width/2 - level.background.width/2);
+    const offsetY = Math.floor(canvas.height/2 - level.background.height/2);
+
+    canvas.translate(offsetX, offsetY);
+    canvas.drawImage(level.background, 0, 0);
+
 
     // draw level
     for (let i = 0; i < level.grid.length; i++) {
         for (let j = 0; j < level.grid[i].length; j++) {
             const blockType = level.grid[i][j];
-            if (!bg) {
-                if (blockType == BLOCK.SOLID) {
-                    spriteAt(3, i, j);
-                } else {
-                    spriteAt(2, i, j);
-                }
-            }
 
             if (blockType == BLOCK.DESTRUCTABOX) {
                 spriteAt(0, i, j);
@@ -406,6 +416,8 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
     }
 
     canvas.clearFilter();
+
+    canvas.translate(-offsetX, -offsetY);
 }
 
 addSetup(setup);

@@ -1,20 +1,24 @@
 <head>
     <title>Alien Thor</title>
     <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
         #canvas, img {
             image-rendering: optimizeSpeed;             /* Older versions of FF          */
             image-rendering: -moz-crisp-edges;          /* FF 6.0+                       */
             image-rendering: -webkit-optimize-contrast; /* Safari                        */
             image-rendering: -o-crisp-edges;            /* OS X & Windows Opera (12.02+) */
             image-rendering: pixelated;                 /* Awesome future-browsers       */
-            width: 640px;
-            height: 512px;
+            width: 100vw;
+            height: 100vh;
         }
     </style>
 </head>
 <body>
-    <div style="max-width: 100%; width: 804px; margin: auto">
-        <canvas id="canvas" width="640" height="512"></canvas>
+    <div>
+        <canvas id="canvas" width="100vw" height="100vh"></canvas>
     </div>
     <script type="text/javascript" src="./constants.js"></script>
     <script type="text/javascript" src="./levels/dummyLevel.js"></script>
