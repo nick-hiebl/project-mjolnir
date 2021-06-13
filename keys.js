@@ -13,19 +13,27 @@ function keyDown(event) {
     let previous = false;
 
     switch (event.key) {
-        case 'w': case 'ArrowUp':
+        case 'ArrowUp':
+            event.preventDefault();
+        case 'w':
             override = !KEYS.UP;
             KEYS.UP = true;
             break;
-        case 'a': case 'ArrowLeft':
+        case 'ArrowLeft':
+            event.preventDefault();
+        case 'a':
             override = !KEYS.LEFT;
             KEYS.LEFT = true;
             break;
-        case 's': case 'ArrowDown':
+        case 'ArrowDown':
+            event.preventDefault();
+        case 's':
             override = !KEYS.DOWN;
             KEYS.DOWN = true;
             break;
-        case 'd': case 'ArrowRight':
+        case 'ArrowRight':
+            event.preventDefault();
+        case 'd':
             override = !KEYS.RIGHT;
             KEYS.RIGHT = true;
             break;
