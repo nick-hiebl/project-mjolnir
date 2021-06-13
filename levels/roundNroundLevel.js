@@ -1,4 +1,4 @@
-var LEVEL_X = {
+var LEVEL_ROUNDnROUND = {
     level_string: `1111111111111111
 1111111111111111
 1111111111111111
@@ -6,10 +6,10 @@ var LEVEL_X = {
 1111111111111111
 1111111111111111
 1111111101111111
-1111111101111111
 1111111100111111
-1111115100111111
-1111112121125111
+1111111100111111
+1111116100161111
+1111112121121111
 1119040000001111
 1111114011001111
 1111111111111111
@@ -21,40 +21,40 @@ var LEVEL_X = {
 1111111111111111`,
     file_name: '',
     player: {
-        i: 8,
-        j: 7,
+        i: 7,
+        j: 8,
     },
     hammer: {
-        i: 8,
-        j: 6,
+        i: 6,
+        j: 8,
         facing: 1,
     },
     doors: [
         {
             id: 1,
-            i: 5,
-            j: 11,
+            i: 11,
+            j: 5,
             state: DOOR.CLOSED,
         },
-	{
+    {
             id: 2,
-            i: 6,
-            j: 12,
+            i: 12,
+            j: 6,
             state: DOOR.CLOSED,
         },
     ],
-    buttons: [
-	{
+    batteries: [
+    {
             id: 1,
-            i: 6,
-            j: 9,
-            state: BUTTON.UNPRESSED,
+            i: 9,
+            j: 6,
+            powered: false,
         },
         {
             id: 2,
-            i: 12,
-            j: 10,
-            state: BUTTON.UNPRESSED,
+            i: 9,
+            j: 11,
+            powered: false,
         },
     ],
 };
