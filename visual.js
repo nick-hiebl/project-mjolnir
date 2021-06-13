@@ -87,16 +87,16 @@ function Canvas(id) {
     }
 
     this.drawTiledImage = function(image, dx, dy) {
-        var startX = Math.floor(-this.width + dx % image.width);
-        var startY = Math.floor(-this.height + dy % image.height);
+        var startX = Math.floor(-image.width + dx % image.width);
+        var startY = Math.floor(-image.height + dy % image.height);
         var pattern = this.ctx.createPattern(image, 'repeat');
         this.ctx.translate(startX, startY);
         this.ctx.fillStyle = pattern;
         this.ctx.fillRect(
             0,
             0,
-            this.width * 2,
-            this.height * 2
+            image.width * 2,
+            image.height * 2
         );
         this.ctx.translate(-startX, -startY);
     }
