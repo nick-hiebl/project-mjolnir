@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "COLLECT_9.tmx",
+    "activeFile": "GLASS_5.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -16,6 +16,62 @@
                 "y": 220
             }
         },
+        "BATTERY_0.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "BATTERY_1.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "BATTERY_2.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "BATTERY_3.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "BATTERY_4.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "BATTERY_5.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "BATTERY_6.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
         "C:/Users/Jash/Desktop/Test.tmx": {
             "scale": 0.675390625,
             "selectedLayer": 0,
@@ -26,86 +82,6 @@
         },
         "C:/Users/Jash/Desktop/project-mjolnir.tsx": {
             "scaleInDock": 1
-        },
-        "COLLECT_0.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 255.67533291058973
-            }
-        },
-        "COLLECT_1.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 256.4870006341155
-            }
-        },
-        "COLLECT_2.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 256.4870006341155
-            }
-        },
-        "COLLECT_3.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 303.56372859860494,
-                "y": 255.67533291058973
-            }
-        },
-        "COLLECT_4.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 304.37539632213065,
-                "y": 257.2986683576411
-            }
-        },
-        "COLLECT_5.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 304.37539632213065,
-                "y": 257.2986683576411
-            }
-        },
-        "COLLECT_6.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 304.37539632213065,
-                "y": 257.2986683576411
-            }
-        },
-        "COLLECT_7.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 257.2986683576411
-            }
-        },
-        "COLLECT_8.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 257.2986683576411
-            }
-        },
-        "COLLECT_9.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 257.2986683576411
-            }
         },
         "DESTRUCT_0.tmx": {
             "scale": 1.23203125,
@@ -136,6 +112,54 @@
             "selectedLayer": 0,
             "viewCenter": {
                 "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "GLASS_0.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "GLASS_1.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "GLASS_2.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "GLASS_3.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "GLASS_4.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "GLASS_5.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
                 "y": 256.4870006341155
             }
         },
@@ -183,23 +207,7 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
-        "coin_Crate_thinker_3.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 256.4870006341155
-            }
-        },
-        "coin_crate_thinker_1.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 256.4870006341155
-            }
-        },
-        "coin_crate_thinker_2.tmx": {
+        "battery_intro.tmx": {
             "scale": 1.23203125,
             "selectedLayer": 0,
             "viewCenter": {
@@ -210,6 +218,14 @@
         "project-mjolnir.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "window_intro_2.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
         }
     },
     "last.exportedFilePath": "C:/Users/Jash/source/repos/project-mjolnir/map-editor",
@@ -220,32 +236,28 @@
     "map.width": 20,
     "openFiles": [
         "project-mjolnir.tsx",
-        "COLLECT_0.tmx",
-        "COLLECT_1.tmx",
-        "COLLECT_2.tmx",
-        "COLLECT_3.tmx",
-        "COLLECT_4.tmx",
-        "COLLECT_5.tmx",
-        "COLLECT_6.tmx",
-        "COLLECT_7.tmx",
-        "COLLECT_8.tmx",
-        "COLLECT_9.tmx"
+        "GLASS_0.tmx",
+        "GLASS_1.tmx",
+        "GLASS_2.tmx",
+        "GLASS_3.tmx",
+        "GLASS_4.tmx",
+        "GLASS_5.tmx"
     ],
-    "project": "_COLLECT.tiled-project",
+    "project": "_GLASS.tiled-project",
     "property.type": "string",
     "recentFiles": [
         "project-mjolnir.tsx",
-        "COLLECT_0.tmx",
-        "COLLECT_1.tmx",
-        "COLLECT_2.tmx",
-        "COLLECT_3.tmx",
-        "COLLECT_4.tmx",
-        "COLLECT_5.tmx",
-        "COLLECT_6.tmx",
-        "COLLECT_7.tmx",
-        "COLLECT_8.tmx",
-        "COLLECT_9.tmx",
-        "coin_Crate_thinker_3.tmx"
+        "GLASS_0.tmx",
+        "GLASS_1.tmx",
+        "GLASS_2.tmx",
+        "GLASS_3.tmx",
+        "GLASS_4.tmx",
+        "GLASS_5.tmx",
+        "window_intro_2.tmx",
+        "BATTERY_6.tmx",
+        "BATTERY_5.tmx",
+        "battery_intro.tmx",
+        "__project-mjolnir.tsx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }

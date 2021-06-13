@@ -52,18 +52,46 @@ const LEVELS = [
     // Intro Levels
     LVL_INTRO_0,
     LVL_INTRO_1,
-
-    HARDEST_0,
-
-    LEVEL_1,
-    LEVEL_2,
-    LEVEL_3,
-    LEVEL_4,
-    LEVEL_5,
-    LEVEL_6,
-    LEVEL_X,
-    MULTI_TEST,
-    LEVEL_ROUNDnROUND,
+    LVL_INTRO_2,
+    
+    LVL_DESTRUCT_0,
+    LVL_DESTRUCT_1,
+    LVL_DESTRUCT_2,
+    LVL_DESTRUCT_3,
+    LVL_DESTRUCT_4,
+    LVL_DESTRUCT_5,
+    
+    LVL_COLLECT_0,
+    LVL_COLLECT_1,
+    LVL_COLLECT_2,
+    LVL_COLLECT_3,
+    LVL_COLLECT_4,
+    LVL_COLLECT_5,
+    LVL_COLLECT_6,
+    LVL_COLLECT_7,
+    LVL_COLLECT_8,
+    LVL_COLLECT_9,
+    
+    LVL_BATTERY_0,
+    LVL_BATTERY_1,
+    LVL_BATTERY_2,
+    LVL_BATTERY_3,
+    LVL_BATTERY_4,
+    
+    LVL_GLASS_0,
+    LVL_GLASS_1,
+    LVL_GLASS_2,
+    LVL_GLASS_3,
+    LVL_GLASS_4,
+    LVL_GLASS_5,
+    
+    
+    LVL_BUTTON_0,
+    LVL_BUTTON_1,
+    LVL_BUTTON_2,
+    LVL_BUTTON_3,
+    LVL_BUTTON_4,
+    LVL_BUTTON_5,
 
     /// Development Levels
     //LVL_EMPTY,

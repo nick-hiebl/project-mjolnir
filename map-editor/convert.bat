@@ -12,4 +12,4 @@ for /f "delims==" %%a in (%1) do (
 
 echo %out:~0,-1% 
 
-convertor.py %out:~0,-1% %~n1 > %~n1.js
+convertor.py %out:~0,-1% %~n1 > EXPORT\%~n1.js

@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "DESTRUCT_5.tmx",
+    "activeFile": "BATTERY_0.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -14,6 +14,62 @@
             "viewCenter": {
                 "x": 223,
                 "y": 220
+            }
+        },
+        "BATTERY_0.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 285.70703868104,
+                "y": 258.9220038046925
+            }
+        },
+        "BATTERY_1.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 709.3975903614459,
+                "y": 259.73367152821817
+            }
+        },
+        "BATTERY_2.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 709.3975903614459,
+                "y": 259.73367152821817
+            }
+        },
+        "BATTERY_3.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 709.3975903614459,
+                "y": 259.73367152821817
+            }
+        },
+        "BATTERY_4.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 257.2986683576411
+            }
+        },
+        "BATTERY_5.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
+        "BATTERY_6.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
             }
         },
         "C:/Users/Jash/Desktop/Test.tmx": {
@@ -31,48 +87,24 @@
             "scale": 1.23203125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 709.3975903614459,
-                "y": 258.9220038046925
+                "x": 300.31705770450225,
+                "y": 255.67533291058973
             }
         },
         "DESTRUCT_1.tmx": {
             "scale": 1.23203125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 709.3975903614459,
-                "y": 258.9220038046925
+                "x": 303.56372859860494,
+                "y": 255.67533291058973
             }
         },
         "DESTRUCT_2.tmx": {
             "scale": 1.23203125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 257.2986683576411
-            }
-        },
-        "DESTRUCT_3.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 320.6087507926443,
-                "y": 257.2986683576411
-            }
-        },
-        "DESTRUCT_4.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 709.3975903614459,
-                "y": 258.9220038046925
-            }
-        },
-        "DESTRUCT_5.tmx": {
-            "scale": 1.23203125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 694.7875713379835,
-                "y": 261.3570069752695
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
             }
         },
         "EMPTY.tmx": {
@@ -123,9 +155,29 @@
                 "y": 228.7266553480476
             }
         },
+        "__project-mjolnir.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "battery_intro.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
+        },
         "project-mjolnir.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "window_intro_2.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 256.4870006341155
+            }
         }
     },
     "last.exportedFilePath": "C:/Users/Jash/source/repos/project-mjolnir/map-editor",
@@ -136,28 +188,27 @@
     "map.width": 20,
     "openFiles": [
         "project-mjolnir.tsx",
-        "DESTRUCT_0.tmx",
-        "DESTRUCT_1.tmx",
-        "DESTRUCT_2.tmx",
-        "DESTRUCT_3.tmx",
-        "DESTRUCT_4.tmx",
-        "DESTRUCT_5.tmx"
+        "BATTERY_0.tmx",
+        "BATTERY_1.tmx",
+        "BATTERY_2.tmx",
+        "BATTERY_3.tmx",
+        "BATTERY_4.tmx"
     ],
-    "project": "_DESTRUCT.tiled-project",
+    "project": "_BATTERY.tiled-project",
     "property.type": "string",
     "recentFiles": [
         "project-mjolnir.tsx",
-        "DESTRUCT_0.tmx",
-        "DESTRUCT_1.tmx",
-        "DESTRUCT_2.tmx",
-        "DESTRUCT_3.tmx",
-        "DESTRUCT_4.tmx",
-        "DESTRUCT_5.tmx",
-        "INTRO_1.tmx",
-        "EMPTY.tmx",
-        "0.tmx",
-        "Test.tmx",
-        "C:/Users/Jash/Desktop/Test.tmx"
+        "BATTERY_4.tmx",
+        "BATTERY_3.tmx",
+        "BATTERY_2.tmx",
+        "BATTERY_1.tmx",
+        "BATTERY_0.tmx",
+        "window_intro_2.tmx",
+        "BATTERY_6.tmx",
+        "BATTERY_5.tmx",
+        "battery_intro.tmx",
+        "__project-mjolnir.tsx",
+        "INTRO_1.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
