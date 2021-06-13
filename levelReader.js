@@ -94,6 +94,7 @@ const LEVELS = [
     LVL_BUTTON_4,
     LVL_BUTTON_5,
 
+    LVL_WIN,
     /// Development Levels
     //LVL_EMPTY,
 ];
