@@ -57,57 +57,48 @@ function samePos(a, b) {
 function isWalkable(i, j) {
     const block = level.grid[i][j];
     if (block == BLOCK.DOOR) {
-        const door = findDoor(i,j);
-        if (door.state == DOOR.CLOSED) {
-            return false;
-        } else {
-            return true;
-        }
+        const door = findItem(i, j, level.doors);
+        return door.state == DOOR.OPEN;
     }
-    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE || block == BLOCK.BUTTON || block == BLOCK.EXIT;
+    return block == BLOCK.EMPTY || block == BLOCK.COLLECTABLE || block == BLOCK.BUTTON || block == BLOCK.EXIT || block == BLOCK.BATTERY;
 }
 
 function isBlastable(i,j) {
     const block = level.grid[i][j];
     if (block == BLOCK.DOOR) {
-        const door = findDoor(i,j);
-        if (door.state == DOOR.CLOSED) {
-            return false;
-        } else {
-            return true;
-        }
+        const door = findItem(i, j, level.doors);
+        return door.state == DOOR.OPEN;
     }
-    return block != BLOCK.SOLID
+    return block != BLOCK.SOLID;
 }
 
-function isDestructable(i,j) {
+function isDestructable(i, j) {
     const block = level.grid[i][j];
     return block == BLOCK.DESTRUCTABOX || block == BLOCK.COLLECTABLE;
 }
 
-// The coordinates passed in here, are for the button. Finds the door associated with the button
-function findDoor(i, j, actualLevel=level) {
-    for (const door of actualLevel.doors) {
-        if (door.i == i && door.j == j) {
-            return door;
+function tryPowering(i, j) {
+    const block = level.grid[i][j];
+
+    if (block == BLOCK.BATTERY) {
+        const battery = findItem(i, j, level.batteries);
+        battery.powered = true;
+
+        if (battery.id) {
+            const doors = level.doors.filter(door => door.id == battery.id);
+            for (const door of doors) {
+                door.state = DOOR.OPEN;
+            }
         }
     }
 }
 
-function findDoorById(id) {
-    for (const door of level.doors) {
-        if (door.id == id) {
-            return door;
-        }
-    }
+function findItem(i, j, list) {
+    return list.find(item => item.i == i && item.j == j);
 }
 
-function findButton(i,j) {
-    for (const button of level.buttons) {
-        if (button.i == i && button.j == j) {
-            return button;
-        }
-    }
+function findById(id, list) {
+    return list.find(item => item.id == id);
 }
 
 function pickupCollectable(i,j) {
@@ -129,10 +120,18 @@ function pressButtons() {
     for (const door of level.doors) {
         if (door.state == DOOR.OPEN) {
             let isCorrect = false;
+            // Check if this is one of the doors being opened by button currently
             for (const activatedDoor of activatedDoors) {
                 if (activatedDoor.i == door.i && activatedDoor.j == door.j) {
                     isCorrect = true;
                     break;
+                }
+            }
+            // Check if this door is opened by a powered battery
+            if (!isCorrect) {
+                const battery = findById(door.id, level.batteries)
+                if (battery && battery.powered) {
+                    isCorrect = true;
                 }
             }
             if (!isCorrect) {
@@ -143,9 +142,9 @@ function pressButtons() {
 }
 
 function findMatchingDoor(i,j) {
-    const button = findButton(i,j);
+    const button = findItem(i, j, level.buttons);
     if (button != undefined) {
-        const door = findDoorById(button.id);
+        const door = findById(button.id, level.doors);
         door.state = DOOR.OPEN;
         return { i: door.i, j: door.j }
     }
@@ -230,7 +229,7 @@ function movePlayer(override=false) {
 
             const { i: di, j: dj } = DIRECTIONS[hammer.facing];
 
-            let m = 1;
+            let m = 0;
             while (true) {
                 const blastI = oldest.i - (di ) * (m + 1);
                 const blastJ = oldest.j - (dj ) * (m + 1);
@@ -239,6 +238,8 @@ function movePlayer(override=false) {
                     if (isDestructable(blastI, blastJ)) {
                         level.grid[blastI][blastJ] = BLOCK.EMPTY;
                     }
+                    tryPowering(blastI, blastJ);
+
                     m++;
                 } else {
                     break;
@@ -247,8 +248,6 @@ function movePlayer(override=false) {
 
             hammer.blastLength = m;
         }
-
-
     } else {
         pressButtons();
     }
@@ -379,11 +378,18 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
             } else if (blockType == BLOCK.COLLECTABLE) {
                 spriteAt(1, i, j);
             } else if (level.grid[i][j] == BLOCK.DOOR) {
-                const door = findDoor(i, j, level);
+                const door = findItem(i, j, level.doors);
                 if (!door || door.state === DOOR.OPEN) {
                     spriteAt(6, i, j);
                 } else {
                     spriteAt(5, i, j);
+                }
+            } else if (level.grid[i][j] == BLOCK.BATTERY) {
+                const battery = findItem(i, j, level.batteries);
+                if (!battery || battery.powered) {
+                    spriteAt(9, i, j);
+                } else {
+                    spriteAt(8, i, j);
                 }
             } else if (level.grid[i][j] == BLOCK.BUTTON) {
                 spriteAt(4, i, j);

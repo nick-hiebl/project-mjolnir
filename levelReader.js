@@ -17,13 +17,19 @@ function resetHammer(hammer, i, j, facing) {
     hammer.blastLength = 0;
 }
 
+function clone(obj) {
+    return Object.assign({}, obj);
+}
+
 function readLevelMap(levelData) {
     const level = {
         grid: [],
-        background: loadImage(levelData.file_name),
+        background: levelData.file_name ? loadImage(levelData.file_name) : null,
         collectables: 0,
-        doors: (levelData.doors || []).map(obj => Object.assign({}, obj)),
-        buttons: (levelData.buttons || []).map(obj => Object.assign({}, obj)),
+        unpoweredBatteries: 0,
+        doors: (levelData.doors || []).map(clone),
+        buttons: (levelData.buttons || []).map(clone),
+        batteries: (levelData.batteries || []).map(clone),
     };
 
     for (const row of levelData.level_string.split('\n')) {
@@ -34,13 +40,17 @@ function readLevelMap(levelData) {
             thisRow.push(blockType);
             if (blockType == BLOCK.COLLECTABLE) {
                 level.collectables++;
+            } else if (blockType == BLOCK.BATTERY) {
+                level.unpoweredBatteries++;
             }
         }
     }
+
     return level;
 }
 
 const LEVELS = [
+    LEVEL_BATTERY_TEST,
     LEVEL_X,
     DUMMY_LEVEL,
     LEVEL_0,

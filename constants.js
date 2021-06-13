@@ -15,5 +15,6 @@ const BLOCK = {
     COLLECTABLE: 3,
     DOOR: 4,
     BUTTON: 5,
+    BATTERY: 6,
     EXIT: 9,
 };
