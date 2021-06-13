@@ -281,8 +281,11 @@ function getHiddenCanvas(width, height) {
 
 function setup() {
     window.addEventListener('keydown', (event) => {
-        const { override, reset } = keyDown(event);
-        if (reset) {
+        const { override, reset, next } = keyDown(event);
+
+        if (next) {
+            nextLevel();
+        } else if (reset) {
             level = loadLevel(player, hammer, currentLevel);
         } else {
             movePlayer(override);
@@ -332,6 +335,20 @@ let bgOffset = 0;
 
 let backgroundFrame = 0;
 
+function nextLevel() {
+    isLoading = true;
+    nextLevelTime = LOADING_TIME;
+    previousState = {
+        level: { ...level },
+        player: { ...player },
+        hammer: { ...hammer },
+    };
+
+    currentLevel++;
+
+    level = loadLevel(player, hammer, currentLevel);
+}
+
 function update(elapsedTime) {
     backgroundFrame += elapsedTime * .1;
 
@@ -341,17 +358,7 @@ function update(elapsedTime) {
     }
 
     if (player.animTimeLeft <= 0 && player.winning && !isLoading) {
-        isLoading = true;
-        nextLevelTime = LOADING_TIME;
-        previousState = {
-            level: { ...level },
-            player: { ...player },
-            hammer: { ...hammer },
-        };
-
-        currentLevel++;
-
-        level = loadLevel(player, hammer, currentLevel);
+        nextLevel();
     }
 
     if (isLoading) {
@@ -442,7 +449,7 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
                     spriteAt(20, i, j);
                 }
             } else if (blockType == BLOCK.COLLECTABLE) {
-                spriteAt(1, i, j);
+                spriteAt(12 + TOOL_KEY[i][j], i, j);
             } else if (level.grid[i][j] == BLOCK.DOOR) {
                 const door = findItem(i, j, level.doors);
                 if (!door || door.state === DOOR.OPEN) {
