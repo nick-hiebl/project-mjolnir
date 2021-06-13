@@ -54,6 +54,7 @@ const LEVELS = [
     // LEVEL_3,
     // LEVEL_4,
     // LEVEL_5,
+    DOOR_PUZZLE_LEVEL,
     LEVEL_6,
     LEVEL_X,
     LEVEL_ROUNDnROUND,
