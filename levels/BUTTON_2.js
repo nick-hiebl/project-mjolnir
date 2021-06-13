@@ -29,18 +29,18 @@ var LVL_BUTTON_2 = {
         facing: 1,
     },
     doors: [
-        { id: DOOR_ID, i: 4, j: 6, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 6, j: 3, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 6, j: 4, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 6, j: 10, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 6, j: 11, state: DOOR.CLOSED }
+        { id: 1, i: 4, j: 6, state: DOOR.CLOSED },
+        { id: 2, i: 6, j: 3, state: DOOR.CLOSED },
+        { id: 3, i: 6, j: 4, state: DOOR.CLOSED },
+        { id: 4, i: 6, j: 10, state: DOOR.CLOSED },
+        { id: 2, i: 6, j: 11, state: DOOR.CLOSED }
     ],
     buttons: [
-        { id: BUTTON_ID, i: 4, j: 5, state: BUTTON.UNPRESSED },
-        { id: BUTTON_ID, i: 6, j: 5, state: BUTTON.UNPRESSED },
-        { id: BUTTON_ID, i: 6, j: 7, state: BUTTON.UNPRESSED },
-        { id: BUTTON_ID, i: 6, j: 9, state: BUTTON.UNPRESSED },
-        { id: BUTTON_ID, i: 7, j: 10, state: BUTTON.UNPRESSED }
+        { id: 1, i: 4, j: 5, state: BUTTON.UNPRESSED },
+        { id: 3, i: 6, j: 5, state: BUTTON.UNPRESSED },
+        { id: 2, i: 6, j: 7, state: BUTTON.UNPRESSED },
+        { id: 4, i: 6, j: 9, state: BUTTON.UNPRESSED },
+        { id: 4, i: 7, j: 10, state: BUTTON.UNPRESSED }
     ],
     batteries: [
         

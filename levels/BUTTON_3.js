@@ -20,25 +20,25 @@ var LVL_BUTTON_3 = {
 1111111111111111
 1111111111111111`,
     player: {
-        i: 1,
-        j: 1,
+        i: 2,
+        j: 12,
     },
     hammer: {
         i: 1,
-        j: 1,
+        j: 12,
         facing: 1,
     },
     doors: [
-        { id: DOOR_ID, i: 4, j: 4, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 4, j: 8, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 13, j: 4, state: DOOR.CLOSED },
-        { id: DOOR_ID, i: 13, j: 8, state: DOOR.CLOSED }
+        { id: 1, i: 4, j: 4, state: DOOR.CLOSED },
+        { id: 2, i: 4, j: 8, state: DOOR.CLOSED },
+        { id: 3, i: 13, j: 4, state: DOOR.CLOSED },
+        { id: 4, i: 13, j: 8, state: DOOR.CLOSED }
     ],
     buttons: [
-        { id: BUTTON_ID, i: 4, j: 9, state: BUTTON.UNPRESSED },
-        { id: BUTTON_ID, i: 5, j: 4, state: BUTTON.UNPRESSED },
-        { id: BUTTON_ID, i: 9, j: 8, state: BUTTON.UNPRESSED },
-        { id: BUTTON_ID, i: 12, j: 5, state: BUTTON.UNPRESSED }
+        { id: 2, i: 4, j: 9, state: BUTTON.UNPRESSED },
+        { id: 1, i: 5, j: 4, state: BUTTON.UNPRESSED },
+        { id: 4, i: 9, j: 8, state: BUTTON.UNPRESSED },
+        { id: 3, i: 12, j: 5, state: BUTTON.UNPRESSED }
     ],
     batteries: [
         
