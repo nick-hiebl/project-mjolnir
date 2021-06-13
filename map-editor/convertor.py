@@ -46,6 +46,10 @@ arr = matrixTranspose(arr)
 player_pos = (1,1)
 hammer_pos = None
 
+doors = []
+buttons = []
+batteries = []
+
 for y in range(len(arr)):
     arr[y] = list(arr[y])
     for x in range(len(arr[y])):
@@ -56,6 +60,12 @@ for y in range(len(arr)):
             player_pos = (y, x)
         elif letter in '<^>v':
             hammer_pos = (y, x, '^>v<'.find(letter))
+        elif letter in '56':
+            doors.append('''{{ id: DOOR_ID, i: {}, j: {}, state: DOOR.CLOSED }}'''.format(y, x))
+        elif letter == '4':
+            buttons.append('''{{ id: BUTTON_ID, i: {}, j: {}, state: BUTTON.UNPRESSED }}'''.format(y, x))
+        elif letter == '8':
+            batteries.append('''{{ id: BATTERY_ID, i: {}, j: {}, powered: false }}'''.format(y, x))
 
     arr[y] = ''.join(arr[y])
 
@@ -75,6 +85,22 @@ s = '''var <LEVEL_NAME> = {{
         j: {},
         facing: {},
     }},
-}};'''.format(arr, *player_pos, *hammer_pos)
+    doors: [
+        {}
+    ],
+    buttons: [
+        {}
+    ],
+    batteries: [
+        {}
+    ],
+}};'''.format(
+    arr,
+    *player_pos,
+    *hammer_pos,
+    ',\n        '.join(doors),
+    ',\n        '.join(buttons),
+    ',\n        '.join(batteries),
+)
 
 print(s)
