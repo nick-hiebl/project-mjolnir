@@ -180,6 +180,10 @@ function movePlayer(override=false) {
         return;
     }
 
+    // check boundary
+    if (i < 0 || j < 0 || i >= level.grid.length || j >= level.grid[i].length) {
+        return;
+    }
     // check empty
     const targetBlock = level.grid[player.i + di][player.j + dj]
     if (!isWalkable(player.i + di, player.j + dj)) {
