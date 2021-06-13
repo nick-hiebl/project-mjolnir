@@ -1,7 +1,3 @@
-function lerp(a, b, factor) {
-    return a * factor + b * (1 - factor);
-}
-
 function tanh(x) {
     const maxi = Math.exp(x);
     const mini = 1 / maxi;

@@ -10,6 +10,8 @@ function resetPlayer(player, i, j) {
 function resetHammer(hammer, i, j, facing) {
     hammer.i = i;
     hammer.j = j;
+    hammer.fromI = i;
+    hammer.fromJ = j;
     hammer.facing = facing;
     hammer.chain = [];
     hammer.links = 3;
