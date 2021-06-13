@@ -16,6 +16,7 @@ const BLOCK = {
     DOOR: 4,
     BUTTON: 5,
     BATTERY: 6,
+    WINDOW: 7,
     EXIT: 9,
 };
 
