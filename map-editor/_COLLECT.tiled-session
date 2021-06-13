@@ -1,0 +1,191 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "COLLECT_0.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "0.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 223,
+                "y": 220
+            }
+        },
+        "C:/Users/Jash/Desktop/Test.tmx": {
+            "scale": 0.675390625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 854.3204164256796,
+                "y": 452.3308270676692
+            }
+        },
+        "C:/Users/Jash/Desktop/project-mjolnir.tsx": {
+            "scaleInDock": 1
+        },
+        "COLLECT_0.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 257.2986683576411
+            }
+        },
+        "COLLECT_1.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "COLLECT_2.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "COLLECT_3.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 303.56372859860494,
+                "y": 255.67533291058973
+            }
+        },
+        "COLLECT_4.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "COLLECT_5.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "COLLECT_6.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "DESTRUCT_0.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 300.31705770450225,
+                "y": 255.67533291058973
+            }
+        },
+        "DESTRUCT_1.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 303.56372859860494,
+                "y": 255.67533291058973
+            }
+        },
+        "DESTRUCT_2.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "EMPTY.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "INTRO_0.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 320.6087507926443,
+                "y": 254.0519974635384
+            }
+        },
+        "INTRO_1.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 301.9403931515536,
+                "y": 210.2219403931516
+            }
+        },
+        "INTRO_2.tmx": {
+            "scale": 1.23203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.37539632213065,
+                "y": 256.4870006341155
+            }
+        },
+        "RoundnRound.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 357.33333333333337,
+                "y": 189.33333333333337
+            }
+        },
+        "Test.tmx": {
+            "scale": 0.9203125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 304.24448217317484,
+                "y": 228.7266553480476
+            }
+        },
+        "__project-mjolnir.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "project-mjolnir.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Jash/source/repos/project-mjolnir/map-editor",
+    "last.imagePath": "C:/Users/Jash/source/repos/project-mjolnir/img",
+    "map.height": 16,
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 20,
+    "openFiles": [
+        "project-mjolnir.tsx",
+        "COLLECT_0.tmx"
+    ],
+    "project": "_COLLECT.tiled-project",
+    "property.type": "string",
+    "recentFiles": [
+        "project-mjolnir.tsx",
+        "COLLECT_0.tmx",
+        "__project-mjolnir.tsx",
+        "INTRO_1.tmx",
+        "EMPTY.tmx",
+        "0.tmx",
+        "Test.tmx",
+        "C:/Users/Jash/Desktop/Test.tmx",
+        "RoundnRound.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}
