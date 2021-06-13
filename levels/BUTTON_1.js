@@ -20,20 +20,20 @@ var LVL_BUTTON_1 = {
 1111111111111111
 1111111111111111`,
     player: {
-        i: 1,
-        j: 1,
+        i: 2,
+        j: 13,
     },
     hammer: {
         i: 1,
-        j: 1,
+        j: 13,
         facing: 1,
     },
     doors: [
-        { id: DOOR_ID, i: 9, j: 13, state: DOOR.CLOSED }
+        { id: 1, i: 9, j: 13, state: DOOR.CLOSED }
     ],
     buttons: [
-        { id: BUTTON_ID, i: 4, j: 13, state: BUTTON.UNPRESSED },
-        { id: BUTTON_ID, i: 8, j: 13, state: BUTTON.UNPRESSED }
+        { id: 1, i: 4, j: 13, state: BUTTON.UNPRESSED },
+        { id: 1, i: 8, j: 13, state: BUTTON.UNPRESSED }
     ],
     batteries: [
         
