@@ -51,6 +51,8 @@ const LEVELS = [
     LVL_INTRO_0,
     INTRO_1,
 
+    LVL_EMPTY,
+
     LEVEL_1,
     LEVEL_2,
     LEVEL_3,
