@@ -19,7 +19,7 @@ var LEVEL_1 = {
 1111111111111111
 1111111111111111
 1111111111111111`,
-    file_name: 'img/levels/level1_real.png',
+    file_name: 'img/levels/level1_fixed.png',
     player: {
         i: 2,
         j: 2,
