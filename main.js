@@ -298,6 +298,7 @@ let isLoading = false;
 let nextLevelTime = 0;
 
 let previousState = null;
+let bgOffset = 0;
 
 function update(elapsedTime) {
     // do stuff
@@ -319,17 +320,11 @@ function update(elapsedTime) {
         level = loadLevel(player, hammer, currentLevel);
     }
 
-    // draw
-    drawBackground();
-
     if (isLoading) {
         nextLevelTime -= elapsedTime;
-        if (nextLevelTime <= 0) {
-            isLoading = false;
-            nextLevelTime = 0;
-            previousBg = null;
-        }
         const offset = Math.round(lerp(0, -canvas.width, nextLevelTime / LOADING_TIME));
+
+        drawBackground(bgOffset + offset / 10);
 
         const transitionPoint = Math.round(lerp(100, -100, nextLevelTime / LOADING_TIME));
 
@@ -342,17 +337,42 @@ function update(elapsedTime) {
         canvas.translate(offset + canvas.width, 0);
         draw(elapsedTime, { level, player, hammer }, Math.max(0, -transitionPoint));
         canvas.restore();
+
+        if (nextLevelTime <= 0) {
+            isLoading = false;
+            nextLevelTime = 0;
+            previousBg = null;
+            bgOffset = bgOffset + offset / 10;
+        }
     } else {
+        // draw
+        drawBackground(bgOffset);
+
         draw(elapsedTime, { level, player, hammer });
     }
 }
 
-function drawBackground() {
+function drawBackground(offset) {
     // blank screen
     canvas.color('white');
     canvas.fillRect(0, 0, canvas.width, canvas.height);
 
-    canvas.drawImage(IMAGES.spaceBackground, 0, 0);
+    const bgWidth = IMAGES.spaceBackground.width;
+
+    if (offset < -bgWidth) {
+        bgOffset += bgWidth;
+    }
+
+    canvas.drawImage(
+        IMAGES.spaceBackground,
+        Math.round(offset),
+        0,
+    );
+    canvas.drawImage(
+        IMAGES.spaceBackground,
+        Math.round(offset) + IMAGES.spaceBackground.width,
+        0,
+    );
 }
 
 function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
