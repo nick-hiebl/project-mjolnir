@@ -269,6 +269,9 @@ function movePlayer(override=false) {
 
                 if (isBlastable(blastI, blastJ)) {
                     if (isDestructable(blastI, blastJ)) {
+                        if (level.grid[blastI][blastJ] == BLOCK.COLLECTABLE) {
+                            level.failed = true;
+                        }
                         level.grid[blastI][blastJ] = BLOCK.EMPTY;
                     }
                     tryPowering(blastI, blastJ);
@@ -544,7 +547,9 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
                     spriteAt(6, i, j);
                 }
             } else if (level.grid[i][j] == BLOCK.EXIT) {
-                if (level.collectables > 0) {
+                if (level.failed) {
+                    spriteAt(18, i, j);
+                } else if (level.collectables > 0) {
                     spriteAt(7, i, j);
                 } else {
                     spriteAt(17, i, j);

@@ -31,6 +31,7 @@ function readLevelMap(levelData) {
         doors: (levelData.doors || []).map(clone),
         buttons: (levelData.buttons || []).map(clone),
         batteries: (levelData.batteries || []).map(clone),
+        failed: false,
     };
 
     for (const row of levelData.level_string.split('\n')) {
