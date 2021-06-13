@@ -47,7 +47,11 @@ function readLevelMap(levelData) {
 }
 
 const LEVELS = [
-    MULTI_TEST,
+    // MULTI_TEST,
+    // LEVEL_0,
+    // LEVEL_1,
+    // LEVEL_2,
+    LEVEL_3,
     LEVEL_X,
     LEVEL_ROUNDnROUND,
     // LEVEL_BATTERY_TEST,
