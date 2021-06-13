@@ -1,6 +1,3 @@
-const WALK_DURATION = 300;
-const WALK_FRAMES = 8;
-
 const IMAGE_FILE_NAMES = {
     alien: 'img/alien.png',
     hammer: 'img/hammer.png',
@@ -47,16 +44,14 @@ const player = {
 const hammer = {
     i: 0,
     j: 0,
+    fromI: 0,
+    fromJ: 0,
     facing: 0,
     chain: [],
     links: 3,
     blasting: false,
     blastLength: 0,
 };
-
-function samePos(a, b) {
-    return a.i === b.i && a.j === b.j;
-}
 
 function isWalkable(i, j) {
     if (outOfBounds(i, j)) {
@@ -226,6 +221,10 @@ function movePlayer(override=false) {
     player.j += dj;
     player.animTimeLeft = WALK_DURATION;
 
+    // Update hammer's from position no matter what
+    hammer.fromI = hammer.i;
+    hammer.fromJ = hammer.j;
+
     hammer.blasting = false;
 
     const isBackTracking =
@@ -253,6 +252,8 @@ function movePlayer(override=false) {
                 break;
             }
         }
+        hammer.fromI = hammer.i;
+        hammer.fromJ = hammer.j;
         hammer.i = oldest.i;
         hammer.j = oldest.j;
         pressButtons();
@@ -535,9 +536,9 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
                 spriteAt(12 + TOOL_KEY[i][j], i, j);
             } else if (level.grid[i][j] == BLOCK.DOOR) {
                 const door = findItem(i, j, level.doors);
-                const wasOpen = player.animTimeLeft > 0 && samePos(
-                    { i, j },
-                    { i: player.fromI, j: player.fromJ },
+                const wasOpen = player.animTimeLeft > 0 && (
+                    samePos({ i, j }, from(player))
+                    || samePos({ i, j }, from(hammer))
                 );
                 if (!door || door.state === DOOR.OPEN || wasOpen) {
                     spriteAt(6, i, j);
@@ -578,9 +579,9 @@ function draw(elapsedTime, { level, player, hammer }, opacity = 100) {
                 spriteAt(20, i, j);
             } else if (level.grid[i][j] == BLOCK.DOOR) {
                 const door = findItem(i, j, level.doors);
-                const wasOpen = player.animTimeLeft > 0 && samePos(
-                    { i, j },
-                    { i: player.fromI, j: player.fromJ },
+                const wasOpen = player.animTimeLeft > 0 && (
+                    samePos({ i, j }, from(player))
+                    || samePos({ i, j }, from(hammer))
                 );
                 if (door && door.state === DOOR.CLOSED && !wasOpen) {
                     spriteAt(11, i, j-1);
