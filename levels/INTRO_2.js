@@ -19,6 +19,7 @@ var LVL_INTRO_2 = {
 1111010111111111
 1111910111111111
 1111011111111111`,
+    file_name: 'img/levels/level3.png',
     player: {
         i: 2,
         j: 4,
