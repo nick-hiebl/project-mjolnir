@@ -48,7 +48,7 @@ function readLevelMap(levelData) {
 
 const LEVELS = [
     // Intro Levels
-    INTRO_0,
+    LVL_INTRO_0,
     INTRO_1,
 
     LEVEL_1,
